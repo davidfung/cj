@@ -3,31 +3,40 @@ use std::time::Instant;
 
 fn load_db() -> HashMap<&'static str, &'static str> {
     HashMap::from([
-        ("報", "gjsle"),
-        ("姊", "vlxh"),
         ("題", "aombc"),
         ("決", "edk"),
+        ("報", "gjsle"),
         ("粵", "hwmvs"),
         ("與", "hxyc"),
         ("求", "ije"),
         ("永", "ine"),
         ("慶", "ixe"),
         ("寶", "jmuc"),
+        ("殺", "kchne"),
+        ("蠅", "lirxu"),
         ("兆", "lmuo"),
         ("哥", "mrnr"),
         ("佛", "olln"),
         ("修", "oloh"),
+        ("切", "psh"),
         ("挑", "qlmo"),
         ("呀", "rmvh"),
         ("改", "suok"),
         ("英", "tlbk"),
         ("甚", "tmmv"),
-        ("旋", "ysono"),
-        ("蠅", "lirxu"),
-        ("畜", "yviw"),
-        ("殺", "kchne"),
+        ("差", "tqm"),
         ("變", "vfok"),
-        ("切", "psh "),        
+        ("姊", "vlxh"),
+        ("旋", "ysono"),
+        ("畜", "yviw"),
+        ("；", "zxag"),
+        ("：", "zxah"),
+        ("？", "zxai"),
+        ("！", "zxaj"),
+        ("《", "zxbu"),
+        ("》", "zxbv"),
+        ("「", "zxcd"),
+        ("」", "zxce"),
     ])
 }
 
@@ -39,25 +48,30 @@ fn main() {
     let now = Instant::now();
 
     for (chinchar, chincode) in &db {
-        count = count +1;
-        if count > max_count {break;}
+        count = count + 1;
+        if count > max_count {
+            break;
+        }
 
-        println!("{}?", chinchar);
-        let mut line = String::new();
-        std::io::stdin().read_line(&mut line).unwrap();
-        let line = line.trim();
-        
-        // println!("line={}", line);
-        // println!("answer={}", chinchar);
-        
-        if line == *chinchar {
+        if ask("", chinchar) {
             score = score + 1;
             println!("Correct! Score: {}/{}", score, count);
         } else {
-            println!("===> Wrong! {} should be {}!  Score:{}/{}", chinchar, chincode, score, count);
+            println!(
+                "===> Wrong! {} should be \"{}\"!  Score:{}/{}",
+                chinchar, chincode, score, count
+            );
+            while !ask("Practice:", chinchar) {}
         }
     }
 
     let elapsed_time = now.elapsed();
     println!("Time taken: {} seconds", elapsed_time.as_secs());
+}
+
+fn ask(prompt: &str, chinchar: &&str) -> bool {
+    println!("{}{}?", prompt, chinchar);
+    let mut line = String::new();
+    std::io::stdin().read_line(&mut line).unwrap();
+    *chinchar == line.trim()
 }

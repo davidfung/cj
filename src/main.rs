@@ -34,11 +34,13 @@ fn load_db() -> HashMap<&'static str, &'static str> {
 fn main() {
     let mut score = 0;
     let mut count = 0;
+    let max_count = 10;
     let db = load_db();
     let now = Instant::now();
 
     for (chinchar, chincode) in &db {
         count = count +1;
+        if count > max_count {break;}
 
         println!("{}?", chinchar);
         let mut line = String::new();

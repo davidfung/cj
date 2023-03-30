@@ -54,7 +54,7 @@ fn main() {
             score = score + 1;
             println!("Correct! Score: {}/{}", score, count);
         } else {
-            println!("===> Wrong! Should be {}!  Score:{}/{}", chincode, score, count);
+            println!("===> Wrong! {} should be {}!  Score:{}/{}", chinchar, chincode, score, count);
         }
     }
 

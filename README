@@ -3,4 +3,10 @@
 When run this in a Microsoft Windows CMD prompt, need to pick a
 Chinese compatible font such as NSimSun.
 
+== todo
+
+* move data to external file
+* add more data
+* option to test again after a test
+* color highlighting
 

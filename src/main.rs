@@ -27,7 +27,7 @@ fn load_db() -> HashMap<&'static str, &'static str> {
         ("畜", "yviw"),
         ("殺", "kchne"),
         ("變", "vfok"),
-        ("切", "psh "),        
+        ("切", "psh"),
     ])
 }
 

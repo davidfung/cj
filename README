@@ -7,8 +7,10 @@ Chinese compatible font such as NSimSun.
 
 * move data to external file
 * add more data
-* option to test again after a test
 * color highlighting
 * maintain statistics
 * use statistics to pick most difficult chars
 
+== features
+
+* run challenges repeatedly, control-c to stop

@@ -41,11 +41,18 @@ fn load_db() -> HashMap<&'static str, &'static str> {
 }
 
 fn main() {
+    loop {
+        run()
+    }
+}
+fn run() {
     let mut score = 0;
     let mut count = 0;
-    let max_count = 10;
+    let max_count = 3;
     let db = load_db();
     let now = Instant::now();
+
+    println!("\n======== T E S T  B E G I N ========");
 
     for (chinchar, chincode) in &db {
         count = count + 1;
@@ -70,7 +77,7 @@ fn main() {
 }
 
 fn ask(prompt: &str, chinchar: &&str) -> bool {
-    println!("{}{}?", prompt, chinchar);
+    println!("{}[{}]?", prompt, chinchar);
     let mut line = String::new();
     std::io::stdin().read_line(&mut line).unwrap();
     *chinchar == line.trim()

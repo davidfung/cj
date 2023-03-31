@@ -9,4 +9,6 @@ Chinese compatible font such as NSimSun.
 * add more data
 * option to test again after a test
 * color highlighting
+* maintain statistics
+* use statistics to pick most difficult chars
 

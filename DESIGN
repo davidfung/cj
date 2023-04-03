@@ -1,0 +1,13 @@
+initialize
+  csv not exists -> create skeleton csv based on hard-coded data
+  load csv
+  
+cleanup
+  overwrite csv
+  
+overwrite csv with statistics
+  write to a tempfile
+  delete existing csv
+  rename tempfile to csv
+
+

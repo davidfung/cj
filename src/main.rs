@@ -37,6 +37,29 @@ fn load_db() -> HashMap<&'static str, &'static str> {
         ("》", "zxbv"),
         ("「", "zxcd"),
         ("」", "zxce"),
+        ("遲", "yseq"),
+        ("歲", "ymihh"),
+        ("非", "lmsy"),
+        ("卡", "ymy"),
+        ("乒", "omh"),
+        ("乓", "omi"),
+        ("鴻", "emhf"),
+        ("也", "pd"),
+        ("撤", "qybk"),
+        ("撒", "qtbk"),
+        ("俄", "ohqi"),
+        ("紙", "vfhvp"),
+        ("衝", "hohgn"),
+        ("勒", "tjks"),
+        ("遞", "yhyu"),
+        ("船", "hycr"),
+        ("麻", "ijcc"),
+        ("雀", "fog"),
+        ("窗", "jchwk"),
+        ("穿", "jcmvh"),
+        ("淚", "ehsk"),
+        ("傻", "ohce"),
+        ("邊", "yhus"),
     ])
 }
 
@@ -48,7 +71,7 @@ fn main() {
 fn run() {
     let mut score = 0;
     let mut count = 0;
-    let max_count = 3;
+    let max_count = 10;
     let db = load_db();
     let now = Instant::now();
 

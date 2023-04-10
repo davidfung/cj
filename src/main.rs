@@ -4,8 +4,6 @@ use std::io::{self, BufRead};
 use std::path::Path;
 use std::time::Instant;
 
-// The output is wrapped in a Result to allow matching on errors
-// Returns an Iterator to the Reader of the lines of the file.
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
 where
     P: AsRef<Path>,
@@ -20,12 +18,15 @@ fn load_db() -> HashMap<String, String> {
         for line in lines {
             if let Ok(buf) = line {
                 let parts: Vec<&str> = buf.split(",").collect();
-                let chinchar = parts[0].trim().to_string();
-                let chincode = parts[1].trim().to_string();
-                h.insert(chinchar, chincode);
+                if parts.len() >= 3 {
+                    let chincode = parts[0].trim().to_string();
+                    let chinchar = parts[1].trim().to_string();
+                    h.insert(chinchar, chincode);
+                }
             }
         }
     }
+    print!("{} records imported", h.len());
     return h;
 }
 

@@ -5,8 +5,6 @@ Chinese compatible font such as NSimSun.
 
 == todo
 
-* move data to external file
-* add more data
 * color highlighting
 * maintain statistics
 * use statistics to pick most difficult chars
@@ -14,3 +12,12 @@ Chinese compatible font such as NSimSun.
 == features
 
 * run challenges repeatedly, control-c to stop
+* data in external file
+
+== data file format
+
+* each line: A,B,C
+* A: cangjie code in lowercase letter
+* B: chinese character
+* C: integer indicates correct count, can be negative
+* Allow blank line

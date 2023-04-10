@@ -1,66 +1,32 @@
 use std::collections::HashMap;
+use std::fs::File;
+use std::io::{self, BufRead};
+use std::path::Path;
 use std::time::Instant;
 
-fn load_db() -> HashMap<&'static str, &'static str> {
-    HashMap::from([
-        ("題", "aombc"),
-        ("決", "edk"),
-        ("報", "gjsle"),
-        ("粵", "hwmvs"),
-        ("與", "hxyc"),
-        ("求", "ije"),
-        ("永", "ine"),
-        ("慶", "ixe"),
-        ("寶", "jmuc"),
-        ("殺", "kchne"),
-        ("蠅", "lirxu"),
-        ("兆", "lmuo"),
-        ("哥", "mrnr"),
-        ("佛", "olln"),
-        ("修", "oloh"),
-        ("切", "psh"),
-        ("挑", "qlmo"),
-        ("呀", "rmvh"),
-        ("改", "suok"),
-        ("英", "tlbk"),
-        ("甚", "tmmv"),
-        ("差", "tqm"),
-        ("變", "vfok"),
-        ("姊", "vlxh"),
-        ("旋", "ysono"),
-        ("畜", "yviw"),
-        ("；", "zxag"),
-        ("：", "zxah"),
-        ("？", "zxai"),
-        ("！", "zxaj"),
-        ("《", "zxbu"),
-        ("》", "zxbv"),
-        ("「", "zxcd"),
-        ("」", "zxce"),
-        ("遲", "yseq"),
-        ("歲", "ymihh"),
-        ("非", "lmsy"),
-        ("卡", "ymy"),
-        ("乒", "omh"),
-        ("乓", "omi"),
-        ("鴻", "emhf"),
-        ("也", "pd"),
-        ("撤", "qybk"),
-        ("撒", "qtbk"),
-        ("俄", "ohqi"),
-        ("紙", "vfhvp"),
-        ("衝", "hohgn"),
-        ("勒", "tjks"),
-        ("遞", "yhyu"),
-        ("船", "hycr"),
-        ("麻", "ijcc"),
-        ("雀", "fog"),
-        ("窗", "jchwk"),
-        ("穿", "jcmvh"),
-        ("淚", "ehsk"),
-        ("傻", "ohce"),
-        ("邊", "yhus"),
-    ])
+// The output is wrapped in a Result to allow matching on errors
+// Returns an Iterator to the Reader of the lines of the file.
+fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
+where
+    P: AsRef<Path>,
+{
+    let file = File::open(filename)?;
+    Ok(io::BufReader::new(file).lines())
+}
+
+fn load_db() -> HashMap<String, String> {
+    let mut h = HashMap::new();
+    if let Ok(lines) = read_lines("./data/cj.csv") {
+        for line in lines {
+            if let Ok(buf) = line {
+                let parts: Vec<&str> = buf.split(",").collect();
+                let chinchar = parts[0].trim().to_string();
+                let chincode = parts[1].trim().to_string();
+                h.insert(chinchar, chincode);
+            }
+        }
+    }
+    return h;
 }
 
 fn main() {
@@ -68,6 +34,7 @@ fn main() {
         run()
     }
 }
+
 fn run() {
     let mut score = 0;
     let mut count = 0;
@@ -99,9 +66,9 @@ fn run() {
     println!("Time taken: {} seconds", elapsed_time.as_secs());
 }
 
-fn ask(prompt: &str, chinchar: &&str) -> bool {
+fn ask(prompt: &str, chinchar: &str) -> bool {
     println!("{}[{}]?", prompt, chinchar);
     let mut line = String::new();
     std::io::stdin().read_line(&mut line).unwrap();
-    *chinchar == line.trim()
+    chinchar == line.trim()
 }

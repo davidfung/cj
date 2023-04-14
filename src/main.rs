@@ -1,8 +1,13 @@
-use std::collections::HashMap;
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
 use std::time::Instant;
+
+struct Chinese {
+    char: String,
+    code: String,
+    score: i16,
+}
 
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
 where
@@ -12,22 +17,27 @@ where
     Ok(io::BufReader::new(file).lines())
 }
 
-fn load_db() -> HashMap<String, String> {
-    let mut h = HashMap::new();
+fn load_db() -> Vec<Chinese> {
+    let mut v = Vec::new();
     if let Ok(lines) = read_lines("./data/cj.csv") {
         for line in lines {
             if let Ok(buf) = line {
                 let parts: Vec<&str> = buf.split(",").collect();
                 if parts.len() >= 3 {
-                    let chincode = parts[0].trim().to_string();
-                    let chinchar = parts[1].trim().to_string();
-                    h.insert(chinchar, chincode);
+                    let code = parts[0].trim().to_string();
+                    let char = parts[1].trim().to_string();
+                    let score = parts[2].trim().parse::<i16>().unwrap();
+                    v.push(Chinese {
+                        char: char,
+                        code: code,
+                        score: score,
+                    });
                 }
             }
         }
     }
-    print!("{} records imported", h.len());
-    return h;
+    print!("{} records imported", v.len());
+    return v;
 }
 
 fn main() {
@@ -45,21 +55,21 @@ fn run() {
 
     println!("\n======== T E S T  B E G I N ========");
 
-    for (chinchar, chincode) in &db {
+    for chin in db.iter() {
         count = count + 1;
         if count > max_count {
             break;
         }
 
-        if ask("", chinchar) {
+        if ask("", &chin.char) {
             score = score + 1;
             println!("Correct! Score: {}/{}", score, count);
         } else {
             println!(
                 "===> Wrong! {} should be \"{}\"!  Score:{}/{}",
-                chinchar, chincode, score, count
+                chin.char, chin.code, score, count
             );
-            while !ask("Practice:", chinchar) {}
+            while !ask("Practice:", &chin.char) {}
         }
     }
 
@@ -67,9 +77,10 @@ fn run() {
     println!("Time taken: {} seconds", elapsed_time.as_secs());
 }
 
-fn ask(prompt: &str, chinchar: &str) -> bool {
+fn ask(prompt: &str, chinchar: &String) -> bool {
     println!("{}[{}]?", prompt, chinchar);
     let mut line = String::new();
     std::io::stdin().read_line(&mut line).unwrap();
+    println!("{}={}", chinchar, line.trim());
     chinchar == line.trim()
 }

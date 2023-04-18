@@ -40,10 +40,34 @@ fn load_db() -> Vec<Chinese> {
     return v;
 }
 
-fn main() {
-    loop {
-        run()
+// Given a set of chinese characters, return a subset of it
+// as the questions.  The selection process is based on some
+// pre-defined criteria.
+fn get_questions(db: Vec<Chinese>) -> Vec<Chinese> {
+    use rand::seq::SliceRandom;
+    use rand::thread_rng;
+    let mut v = Vec::new();
+
+    let mut count = 0;
+    while count < 5 {
+        count = count + 1;
+        let question = db.choose(&mut thread_rng()).unwrap();
+        let c = Chinese {
+            char: question.char.clone(),
+            code: question.code.clone(),
+            score: question.score,
+        };
+        v.push(c);
     }
+    return v;
+}
+
+fn ask(prompt: &str, chinchar: &String) -> bool {
+    println!("{}[{}]?", prompt, chinchar);
+    let mut line = String::new();
+    std::io::stdin().read_line(&mut line).unwrap();
+    println!("{}={}", chinchar, line.trim());
+    chinchar == line.trim()
 }
 
 fn run() {
@@ -51,11 +75,13 @@ fn run() {
     let mut count = 0;
     let max_count = 10;
     let db = load_db();
+
+    let questions = get_questions(db);
+
+    println!("\n\n\n======== T E S T  B E G I N ========");
     let now = Instant::now();
 
-    println!("\n======== T E S T  B E G I N ========");
-
-    for chin in db.iter() {
+    for chin in questions.iter() {
         count = count + 1;
         if count > max_count {
             break;
@@ -77,10 +103,8 @@ fn run() {
     println!("Time taken: {} seconds", elapsed_time.as_secs());
 }
 
-fn ask(prompt: &str, chinchar: &String) -> bool {
-    println!("{}[{}]?", prompt, chinchar);
-    let mut line = String::new();
-    std::io::stdin().read_line(&mut line).unwrap();
-    println!("{}={}", chinchar, line.trim());
-    chinchar == line.trim()
+fn main() {
+    loop {
+        run()
+    }
 }

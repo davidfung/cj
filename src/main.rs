@@ -48,6 +48,7 @@ fn run(db: &mut CJDatabase) {
 fn main() {
     let mut db = database::CJDatabase { v: Vec::new() };
     loop {
-        run(&mut db)
+        run(&mut db);
+        db.save();
     }
 }

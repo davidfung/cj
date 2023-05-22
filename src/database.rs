@@ -1,6 +1,10 @@
 use std::fs::File;
-use std::io::{self, BufRead};
+use std::io::{self, BufRead, Write};
 use std::path::Path;
+
+const QUESTION_COUNT: i32 = 2;
+const DATA_FILE: &str = r"./data/cj.csv";
+const TEMP_FILE: &str = r"./data/cjtemp.csv";
 
 pub struct Chinese {
     pub char: String,
@@ -8,6 +12,7 @@ pub struct Chinese {
     pub score: i16,
 }
 
+// A Chinese characters database implemented as a vector.
 pub struct CJDatabase {
     pub v: Vec<Chinese>,
 }
@@ -22,7 +27,7 @@ impl CJDatabase {
     }
 
     pub fn load(&mut self) {
-        if let Ok(lines) = self.read_lines("./data/cj.csv") {
+        if let Ok(lines) = self.read_lines(DATA_FILE) {
             for line in lines {
                 if let Ok(buf) = line {
                     let parts: Vec<&str> = buf.split(",").collect();
@@ -42,6 +47,12 @@ impl CJDatabase {
         print!("{} records imported", self.v.len());
     }
 
+    // Save the current database to disk.
+    pub fn save(&mut self) {
+        let mut file = File::create(TEMP_FILE).expect("create failed");
+        file.write("hello world".as_bytes()).expect("write failed");
+    }
+
     // Given a set of chinese characters, return a subset of it
     // as the questions.  The selection process is based on some
     // pre-defined criteria.
@@ -51,7 +62,7 @@ impl CJDatabase {
         let mut q = Vec::new();
 
         let mut count = 0;
-        while count < 5 {
+        while count < QUESTION_COUNT {
             count = count + 1;
             let question = self.v.choose(&mut thread_rng()).unwrap();
             let c = Chinese {

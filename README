@@ -5,7 +5,7 @@ Chinese compatible font such as NSimSun.
 
 == todo
 
-* color highlighting
+* color highlighting, use text-colorizer crate
 * maintain statistics
 * use statistics to pick most difficult chars
 
@@ -16,10 +16,10 @@ Chinese compatible font such as NSimSun.
 
 == data file format
 
-* test file
+* text file
 * each line: A,B,C
 * example: aombc,題,0
 * A: cangjie code in lowercase letter
 * B: chinese character
-* C: integer indicates correct count, can be negative
-* Allow blank line
+* C: integer score, indicates correct count, can be negative
+* Allow blank lines

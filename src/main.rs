@@ -16,7 +16,6 @@ fn run(db: &mut CJDatabase) {
     let mut score = 0;
     let mut count = 0;
     let max_count = 10;
-    db.load();
 
     let questions = db.get_questions();
 
@@ -47,6 +46,8 @@ fn run(db: &mut CJDatabase) {
 
 fn main() {
     let mut db = database::CJDatabase { v: Vec::new() };
+    db.load();
+
     loop {
         run(&mut db);
         db.save();

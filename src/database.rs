@@ -50,7 +50,10 @@ impl CJDatabase {
     // Save the current database to disk.
     pub fn save(&mut self) {
         let mut file = File::create(TEMP_FILE).expect("create failed");
-        file.write("hello world".as_bytes()).expect("write failed");
+        for x in &self.v {
+            let s = format!("{},{},{}\n", x.code, x.char, x.score);
+            file.write(s.as_bytes()).expect("data file write failed");
+        }
     }
 
     // Given a set of chinese characters, return a subset of it

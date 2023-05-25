@@ -1,4 +1,4 @@
-use std::fs::File;
+use std::fs::{self, File};
 use std::io::{self, BufRead, Write};
 use std::path::Path;
 
@@ -47,13 +47,20 @@ impl CJDatabase {
         print!("{} records imported", self.v.len());
     }
 
-    // Save the current database to disk.
+    // Save the current database to disk in a safe way.
     pub fn save(&mut self) {
+        // save to a temp file
         let mut file = File::create(TEMP_FILE).expect("create failed");
         for x in &self.v {
             let s = format!("{},{},{}\n", x.code, x.char, x.score);
             file.write(s.as_bytes()).expect("data file write failed");
         }
+
+        // delete original file
+        fs::remove_file(DATA_FILE).expect("unable to remove old data file");
+
+        // rename temp file to original file
+        fs::rename(TEMP_FILE, DATA_FILE).expect("unable to rename data file")
     }
 
     // Given a set of chinese characters, return a subset of it

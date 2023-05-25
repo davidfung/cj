@@ -3,17 +3,15 @@
 == STAGE 2
 
 * update score on each question
-* randomize question
+* save score to database
 
 == STAGE 3
 
 * at this point, not using the score yet
 * use the score to select questions
 
-== NEXT
+== STAGE 4
 
 * sort the data file
 * dedup the data file
 * separate practice round after the test
-* layer the app logic
-* load db only once at the beginning

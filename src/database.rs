@@ -66,7 +66,7 @@ impl CJDatabase {
     // Given a set of chinese characters, return a subset of it
     // as the questions.  The selection process is based on some
     // pre-defined criteria.
-    pub fn get_questions(&self) -> Vec<Chinese> {
+    pub fn get_items(&self) -> Vec<Chinese> {
         use rand::seq::SliceRandom;
         use rand::thread_rng;
         let mut q = Vec::new();
@@ -84,4 +84,6 @@ impl CJDatabase {
         }
         return q;
     }
+
+    pub fn update(&self, items: Vec<Chinese>) {}
 }

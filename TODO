@@ -2,7 +2,7 @@
 
 == STAGE 2
 
-* update score on each question
+* [done] update score on each question
 * save score to database
 
 == STAGE 3

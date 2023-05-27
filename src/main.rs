@@ -22,7 +22,7 @@ fn run(items: Vec<Chinese>) -> Vec<Chinese> {
     println!("\n\n\n======== T E S T  B E G I N ========");
     let now = Instant::now();
 
-    for chin in items.iter() {
+    for chin in items {
         count = count + 1;
         if count > max_count {
             break;
@@ -62,6 +62,9 @@ fn main() {
     loop {
         let items = db.get_items();
         let results = run(items);
+        for i in &results {
+            println!("{} {} {}", i.char, i.code, i.score);
+        }
         db.update(results);
         db.save();
     }

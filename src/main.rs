@@ -22,7 +22,7 @@ fn run(items: Vec<Chinese>) -> Vec<Chinese> {
     println!("\n\n\n======== T E S T  B E G I N ========");
     let now = Instant::now();
 
-    for chin in items {
+    for mut chin in items.into_iter() {
         count = count + 1;
         if count > max_count {
             break;
@@ -41,12 +41,8 @@ fn run(items: Vec<Chinese>) -> Vec<Chinese> {
             while !ask("Practice:", &chin.char) {}
         }
 
-        let result = Chinese {
-            char: chin.char.clone(),
-            code: chin.code.clone(),
-            score: chin.score + mark,
-        };
-        results.push(result);
+        chin.score += mark;
+        results.push(chin);
     }
 
     let elapsed_time = now.elapsed();

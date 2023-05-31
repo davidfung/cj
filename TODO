@@ -5,16 +5,23 @@
 * [done] update score on each question
 * [done] save score to database
 * [done] remove debug messages
-* CLI option to reset scores
 
 == STAGE 3
 
 * make test() non-destructive
 * at this point, not using the score yet
-* use the score to select questions
 
 == STAGE 4
+
+* use the score to select questions
+
+== STAGE 5
 
 * sort the data file
 * dedup the data file
 * separate practice round after the test
+
+== STAGE 6
+
+* CLI option to reset scores
+

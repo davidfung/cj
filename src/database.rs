@@ -44,7 +44,7 @@ impl CJDatabase {
                 }
             }
         }
-        print!("{} records imported", self.v.len());
+        println!("{} records imported", self.v.len());
     }
 
     // Save the current database to disk in a safe way.
@@ -85,5 +85,22 @@ impl CJDatabase {
         return q;
     }
 
-    pub fn update(&self, items: Vec<Chinese>) {}
+    pub fn update(&mut self, items: Vec<Chinese>) {
+        for y in items {
+            let index = self.v.iter().position(|x| x.code == y.code).unwrap();
+            self.v[index].score = y.score;
+        }
+    }
+}
+
+#[test]
+fn test_update() {
+    let mut db = CJDatabase { v: Vec::new() };
+    db.load();
+    let items = db.get_items();
+    for i in &items {
+        println!("{} {} {}", i.char, i.code, i.score);
+    }
+    db.update(items);
+    db.save();
 }

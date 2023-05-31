@@ -8,16 +8,16 @@ fn ask(prompt: &str, chinchar: &String) -> bool {
     println!("{}[{}]?", prompt, chinchar);
     let mut line = String::new();
     std::io::stdin().read_line(&mut line).unwrap();
-    println!("{}={}", chinchar, line.trim());
+    //println!("{}={}", chinchar, line.trim());
     chinchar == line.trim()
 }
 
 fn run(items: Vec<Chinese>) -> Vec<Chinese> {
-    let mut score = 0;
+    let mut mark = 0;
     let mut count = 0;
     let max_count = 10;
     let mut results: Vec<Chinese> = Vec::new();
-    let mut mark;
+    let mut score;
 
     println!("\n\n\n======== T E S T  B E G I N ========");
     let now = Instant::now();
@@ -29,19 +29,19 @@ fn run(items: Vec<Chinese>) -> Vec<Chinese> {
         }
 
         if ask("", &chin.char) {
-            mark = 1;
-            score = score + 1;
-            println!("Correct! Score: {}/{}", score, count);
+            score = 1;
+            mark = mark + 1;
+            println!("Correct! Mark: {}/{}", mark, count);
         } else {
-            mark = -1;
+            score = -1;
             println!(
-                "===> Wrong! {} should be \"{}\"!  Score:{}/{}",
-                chin.char, chin.code, score, count
+                "===> Wrong! {} should be \"{}\"!  Mark:{}/{}",
+                chin.char, chin.code, mark, count
             );
             while !ask("Practice:", &chin.char) {}
         }
 
-        chin.score += mark;
+        chin.score += score;
         results.push(chin);
     }
 
@@ -58,9 +58,6 @@ fn main() {
     loop {
         let items = db.get_items();
         let results = run(items);
-        for i in &results {
-            println!("{} {} {}", i.char, i.code, i.score);
-        }
         db.update(results);
         db.save();
     }

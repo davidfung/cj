@@ -3,10 +3,13 @@
 == STAGE 2
 
 * [done] update score on each question
-* save score to database
+* [done] save score to database
+* [done] remove debug messages
+* CLI option to reset scores
 
 == STAGE 3
 
+* make test() non-destructive
 * at this point, not using the score yet
 * use the score to select questions
 

@@ -2,7 +2,6 @@ use std::fs::{self, File};
 use std::io::{self, BufRead, Write};
 use std::path::Path;
 
-const QUESTION_COUNT: i32 = 2;
 const DATA_FILE: &str = r"./data/cj.csv";
 const TEMP_FILE: &str = r"./data/cjtemp.csv";
 
@@ -63,16 +62,15 @@ impl CJDatabase {
         fs::rename(TEMP_FILE, DATA_FILE).expect("unable to rename data file")
     }
 
-    // Given a set of chinese characters, return a subset of it
-    // as the questions.  The selection process is based on some
-    // pre-defined criteria.
-    pub fn get_items(&self) -> Vec<Chinese> {
+    // Given a set of chinese characters, return a random subset of it.
+    // This implementation allows duplicates in the subset.
+    pub fn get_items_random(&self, item_count: i32) -> Vec<Chinese> {
         use rand::seq::SliceRandom;
         use rand::thread_rng;
         let mut q = Vec::new();
 
         let mut count = 0;
-        while count < QUESTION_COUNT {
+        while count < item_count {
             count = count + 1;
             let question = self.v.choose(&mut thread_rng()).unwrap();
             let c = Chinese {
@@ -85,6 +83,28 @@ impl CJDatabase {
         return q;
     }
 
+    // Given a set of chinese characters, return a subset of it
+    // based on the scores.
+    pub fn get_items_score(&self, item_count: i32) -> Vec<Chinese> {
+        use rand::seq::SliceRandom;
+        use rand::thread_rng;
+        let mut q = Vec::new();
+
+        let mut count = 0;
+        while count < item_count {
+            count = count + 1;
+            let question = self.v.choose(&mut thread_rng()).unwrap();
+            let c = Chinese {
+                char: question.char.clone(),
+                code: question.code.clone(),
+                score: question.score,
+            };
+            q.push(c);
+        }
+        q
+    }
+
+    // Update the database with the scores
     pub fn update(&mut self, items: Vec<Chinese>) {
         for y in items {
             let index = self.v.iter().position(|x| x.code == y.code).unwrap();
@@ -94,13 +114,23 @@ impl CJDatabase {
 }
 
 #[test]
-fn test_update() {
+fn test_db_update() {
     let mut db = CJDatabase { v: Vec::new() };
     db.load();
-    let items = db.get_items();
+    let items = db.get_items_random(2);
     for i in &items {
         println!("{} {} {}", i.char, i.code, i.score);
     }
     db.update(items);
     db.save();
+}
+
+#[test]
+fn test_db_get_items_score() {
+    let mut db = CJDatabase { v: Vec::new() };
+    db.load();
+    let items = db.get_items_score(2);
+    for i in &items {
+        println!("{} {} {}", i.char, i.code, i.score);
+    }
 }

@@ -4,6 +4,8 @@ use database::{CJDatabase, Chinese};
 
 mod database;
 
+const QUESTION_COUNT: i32 = 2;
+
 fn ask(prompt: &str, chinchar: &String) -> bool {
     println!("{}[{}]?", prompt, chinchar);
     let mut line = String::new();
@@ -56,7 +58,7 @@ fn main() {
     db.load();
 
     loop {
-        let items = db.get_items();
+        let items = db.get_items_random(QUESTION_COUNT);
         let results = run(items);
         db.update(results);
         db.save();

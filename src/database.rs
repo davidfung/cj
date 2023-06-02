@@ -86,20 +86,22 @@ impl CJDatabase {
     // Given a set of chinese characters, return a subset of it
     // based on the scores.
     pub fn get_items_score(&self, item_count: i32) -> Vec<Chinese> {
-        use rand::seq::SliceRandom;
-        use rand::thread_rng;
         let mut q = Vec::new();
+        let mut count;
 
-        let mut count = 0;
-        while count < item_count {
-            count = count + 1;
-            let question = self.v.choose(&mut thread_rng()).unwrap();
+        count = 0;
+        for i in self.v.iter().filter(|x| x.score < 0) {
+            println!("{} {} {}", i.char, i.code, i.score);
+            count += 1;
             let c = Chinese {
-                char: question.char.clone(),
-                code: question.code.clone(),
-                score: question.score,
+                char: i.char.clone(),
+                code: i.code.clone(),
+                score: i.score,
             };
             q.push(c);
+            if count >= item_count {
+                break;
+            }
         }
         q
     }

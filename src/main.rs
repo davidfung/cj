@@ -58,7 +58,7 @@ fn main() {
     db.load();
 
     loop {
-        let items = db.get_items_random(QUESTION_COUNT);
+        let items = db.get_items_score(QUESTION_COUNT);
         let results = run(items);
         db.update(results);
         db.save();

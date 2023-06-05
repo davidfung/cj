@@ -84,26 +84,33 @@ impl CJDatabase {
     }
 
     // Given a set of chinese characters, return a subset of it
-    // based on the scores.
-    pub fn get_items_score(&self, item_count: i32) -> Vec<Chinese> {
-        let mut q = Vec::new();
+    // based on the scores:
+    // 30% score < 0      [difficult]
+    // 30% score == 0     [new]
+    // 30% 0 < score <= 3 [normal]
+    // Rest score > 3     [easy]
+    pub fn get_items_score(&self, item_count: usize) -> Vec<Chinese> {
+        let mut items = Vec::new();
         let mut count;
+        let mut quota;
 
+        // difficult
+        quota = item_count / 3; // 33%
         count = 0;
         for i in self.v.iter().filter(|x| x.score < 0) {
-            println!("{} {} {}", i.char, i.code, i.score);
+            if count >= quota || items.len() >= item_count {
+                break;
+            }
             count += 1;
             let c = Chinese {
                 char: i.char.clone(),
                 code: i.code.clone(),
                 score: i.score,
             };
-            q.push(c);
-            if count >= item_count {
-                break;
-            }
+            items.push(c);
         }
-        q
+
+        items
     }
 
     // Update the database with the scores
@@ -131,8 +138,8 @@ fn test_db_update() {
 fn test_db_get_items_score() {
     let mut db = CJDatabase { v: Vec::new() };
     db.load();
-    let items = db.get_items_score(2);
-    for i in &items {
-        println!("{} {} {}", i.char, i.code, i.score);
+    let items = db.get_items_score(10);
+    for (i, ch) in items.iter().enumerate() {
+        println!("#{} {} {} {}", i, ch.char, ch.code, ch.score);
     }
 }

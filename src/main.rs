@@ -4,7 +4,7 @@ use database::{CJDatabase, Chinese};
 
 mod database;
 
-const QUESTION_COUNT: i32 = 2;
+const QUESTION_COUNT: usize = 2;
 
 fn ask(prompt: &str, chinchar: &String) -> bool {
     println!("{}[{}]?", prompt, chinchar);

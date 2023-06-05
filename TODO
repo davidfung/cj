@@ -4,6 +4,8 @@
 
 * use the score to select questions
 * use strategy design pattern with trait
+* add dependency injection (cj.txt) in testing
+  ~ add "testdata" folder
 
 == STAGE 5
 

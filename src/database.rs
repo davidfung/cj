@@ -2,6 +2,9 @@ use std::fs::{self, File};
 use std::io::{self, BufRead, Write};
 use std::path::Path;
 
+use rand::seq::{IteratorRandom, SliceRandom};
+use rand::thread_rng;
+
 const DATA_FILE: &str = r"./data/cj.csv";
 const TEMP_FILE: &str = r"./data/cjtemp.csv";
 
@@ -65,8 +68,6 @@ impl CJDatabase {
     // Given a set of chinese characters, return a random subset of it.
     // This implementation allows duplicates in the subset.
     pub fn get_items_random(&self, item_count: i32) -> Vec<Chinese> {
-        use rand::seq::SliceRandom;
-        use rand::thread_rng;
         let mut q = Vec::new();
 
         let mut count = 0;
@@ -85,29 +86,108 @@ impl CJDatabase {
 
     // Given a set of chinese characters, return a subset of it
     // based on the scores:
-    // 30% score < 0      [difficult]
-    // 30% score == 0     [new]
-    // 30% 0 < score <= 3 [normal]
-    // Rest score > 3     [easy]
+    // at most 33%: score < 0      [difficult]
+    // at most 33%: score == 0     [new]
+    // at most 33%: 0 < score <= 3 [easy]
+    // the remaining: score > 3    [very easy]
+    // rest                        [random]
     pub fn get_items_score(&self, item_count: usize) -> Vec<Chinese> {
         let mut items = Vec::new();
-        let mut count;
-        let mut quota;
+        let quota = item_count / 3; // 33%
+        let mut rest;
 
         // difficult
-        quota = item_count / 3; // 33%
-        count = 0;
-        for i in self.v.iter().filter(|x| x.score < 0) {
-            if count >= quota || items.len() >= item_count {
+        for q in self
+            .v
+            .iter()
+            .filter(|x| x.score < 0)
+            .choose_multiple(&mut thread_rng(), quota)
+            .iter()
+        {
+            if items.len() >= item_count {
                 break;
             }
-            count += 1;
             let c = Chinese {
-                char: i.char.clone(),
-                code: i.code.clone(),
-                score: i.score,
+                char: q.char.clone(),
+                code: q.code.clone(),
+                score: q.score,
             };
             items.push(c);
+        }
+
+        // new
+        for q in self
+            .v
+            .iter()
+            .filter(|x| x.score == 0)
+            .choose_multiple(&mut thread_rng(), quota)
+            .iter()
+        {
+            if items.len() >= item_count {
+                break;
+            }
+            let c = Chinese {
+                char: q.char.clone(),
+                code: q.code.clone(),
+                score: q.score,
+            };
+            items.push(c);
+        }
+
+        // easy
+        for q in self
+            .v
+            .iter()
+            .filter(|x| x.score > 0 && x.score <= 3)
+            .choose_multiple(&mut thread_rng(), quota)
+            .iter()
+        {
+            if items.len() >= item_count {
+                break;
+            }
+            let c = Chinese {
+                char: q.char.clone(),
+                code: q.code.clone(),
+                score: q.score,
+            };
+            items.push(c);
+        }
+
+        // very easy
+        rest = item_count - items.len();
+        if rest > 0 {
+            for q in self
+                .v
+                .iter()
+                .filter(|x| x.score > 3)
+                .choose_multiple(&mut thread_rng(), rest)
+                .iter()
+            {
+                let c = Chinese {
+                    char: q.char.clone(),
+                    code: q.code.clone(),
+                    score: q.score,
+                };
+                items.push(c);
+            }
+        }
+
+        // random
+        rest = item_count - items.len();
+        if rest > 0 {
+            for q in self
+                .v
+                .iter()
+                .choose_multiple(&mut thread_rng(), rest)
+                .iter()
+            {
+                let c = Chinese {
+                    char: q.char.clone(),
+                    code: q.code.clone(),
+                    score: q.score,
+                };
+                items.push(c);
+            }
         }
 
         items

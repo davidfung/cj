@@ -2,14 +2,13 @@
 
 == STAGE 4
 
-* use the score to select questions
+* [DONE] use the score to select questions
 * use strategy design pattern with trait
 * add dependency injection (cj.txt) in testing
   ~ add "testdata" folder
 
 == STAGE 5
 
-* check at least 10 questions
 * sort the data file
 * dedup the data file
 * separate practice round after the test

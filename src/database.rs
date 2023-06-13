@@ -190,6 +190,7 @@ impl CJDatabase {
             }
         }
 
+        items.shuffle(&mut thread_rng());
         items
     }
 

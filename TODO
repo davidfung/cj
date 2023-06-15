@@ -1,11 +1,10 @@
 = TODO
 
-== STAGE 5
+== STAGE 6
 
-* sort the data file
 * add dependency injection (cj.txt) in testing
 
-== STAGE 6
+== STAGE 7
 
 * dedup the data file
 * CLI option to reset scores

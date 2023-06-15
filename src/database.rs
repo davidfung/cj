@@ -201,6 +201,15 @@ impl CJDatabase {
             self.v[index].score = y.score;
         }
     }
+
+    // Sort the database records by code
+    pub fn sort(&mut self) {
+        self.v.sort_by_key(|x| x.code.clone());
+    }
+
+    // De-duplication the database records by code.
+    // Assume the records are already sorted.
+    pub fn dedup(&mut self) {}
 }
 
 #[test]
@@ -224,3 +233,14 @@ fn test_db_get_items_score() {
         println!("#{} {} {} {}", i, ch.char, ch.code, ch.score);
     }
 }
+
+#[test]
+fn test_db_sort() {
+    let mut db = CJDatabase { v: Vec::new() };
+    db.load();
+    db.sort();
+    db.save();
+}
+
+#[test]
+fn test_db_dedup() {}

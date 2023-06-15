@@ -1,19 +1,14 @@
 = TODO
 
-== STAGE 4
-
-* [DONE] use the score to select questions
-* use strategy design pattern with trait
-* add dependency injection (cj.txt) in testing
-  ~ add "testdata" folder
-
 == STAGE 5
 
 * sort the data file
-* dedup the data file
-* separate practice round after the test
+* add dependency injection (cj.txt) in testing
 
 == STAGE 6
 
+* dedup the data file
 * CLI option to reset scores
+* use strategy design pattern with trait
+* separate practice round after the test
 * csv not exists -> create skeleton csv based on hard-coded data

@@ -1,11 +1,12 @@
 = TODO
 
 == STAGE 6
-
 * add dependency injection (cj.txt) in testing
+* per user score
+* accept uppercase in data file
 
 == STAGE 7
-
+* color highlighting, use text-colorizer crate
 * dedup the data file
 * CLI option to reset scores
 * use strategy design pattern with trait

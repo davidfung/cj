@@ -1,21 +1,19 @@
 = cj
-
 When run this in a Microsoft Windows CMD prompt, need to pick a
 Chinese compatible font such as NSimSun.
 
-== todo
+== Features
+* Run challenges repeatedly, control-c to stop.
+* Keep score on each character.
+* Use the scores to pick the most difficult characters in the challenges
+  to help the user to learn.
 
-* color highlighting, use text-colorizer crate
-* maintain statistics
-* use statistics to pick most difficult chars
+== Database
+* Data in external file, which can be edited by the user with a text editor.
+* The user can just add new entries at the end.  The program will sort it 
+  automatically.
 
-== features
-
-* run challenges repeatedly, control-c to stop
-* data in external file
-
-== data file format
-
+=== Data File Format
 * text file
 * each line: A,B,C
 * example: aombc,題,0

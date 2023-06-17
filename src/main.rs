@@ -56,6 +56,8 @@ fn run(items: Vec<Chinese>) -> Vec<Chinese> {
 fn main() {
     let mut db = CJDatabase { v: Vec::new() };
     db.load();
+    db.sort();
+    db.dedup();
 
     loop {
         let items = db.get_items_score(QUESTION_COUNT);

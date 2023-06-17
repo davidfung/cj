@@ -1,14 +1,17 @@
 = TODO
 
-== STAGE 6
-* add dependency injection (cj.txt) in testing
-* per user score
-* accept uppercase in data file
-
 == STAGE 7
-* color highlighting, use text-colorizer crate
+* add dependency injection (cj.txt) in testing
+
+== STAGE NEXT
+* At the end of each round, ask user continue or quit.
 * dedup the data file
+
+== STAGE NEXT NEXT
+* color highlighting, use text-colorizer crate
+* per user score, require login no password
 * CLI option to reset scores
+* CLI option to set number of questions in a challenge
 * use strategy design pattern with trait
 * separate practice round after the test
 * csv not exists -> create skeleton csv based on hard-coded data

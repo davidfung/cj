@@ -1,23 +1,29 @@
 = cj
+
 When run this in a Microsoft Windows CMD prompt, need to pick a
 Chinese compatible font such as NSimSun.
 
+== Play
+* Each round has 10 challenges.
+* At the end of each round, ask user continue or quit.
+
 == Features
-* Run challenges repeatedly, control-c to stop.
 * Keep score on each character.
-* Use the scores to pick the most difficult characters in the challenges
-  to help the user to learn.
+* At the beginning of the game, load the database once, sort and dedup.
+* At the end of each round, update the database with the scores.
+* Use the scores to pick the characters the user most unfamiliar with.
 
 == Database
 * Data in external file, which can be edited by the user with a text editor.
 * The user can just add new entries at the end.  The program will sort it 
-  automatically.
+  and remove duplicates automatically.
 
 === Data File Format
-* text file
-* each line: A,B,C
-* example: aombc,題,0
-* A: cangjie code in lowercase letter
+* Text file
+* Each line: A,B,C
+* Example: aombc,題,0
+* A: cangjie code (both upper and lower cases ok)
 * B: chinese character
 * C: integer score, indicates correct count, can be negative
-* Allow blank lines
+* Blank lines are allowed
+* The program will automatically convert cangjie codes to lowercase.

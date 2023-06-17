@@ -34,7 +34,7 @@ impl CJDatabase {
                 if let Ok(buf) = line {
                     let parts: Vec<&str> = buf.split(",").collect();
                     if parts.len() >= 3 {
-                        let code = parts[0].trim().to_string();
+                        let code = parts[0].trim().to_string().to_lowercase();
                         let char = parts[1].trim().to_string();
                         let score = parts[2].trim().parse::<i16>().unwrap();
                         self.v.push(Chinese {

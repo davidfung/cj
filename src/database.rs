@@ -252,12 +252,15 @@ fn test_db_sort() {
     db2.load_from("./unittest/cj02.csv");
     db2.sort();
 
+    assert!(db1.v.len() == db2.v.len());
+
     let matching = db1
         .v
         .iter()
         .zip(&db2.v)
         .filter(|&(a, b)| a.code == b.code)
         .count();
+
     assert!(db1.v.len() == matching);
 }
 

@@ -2,6 +2,8 @@
 
 == STAGE 7
 * add dependency injection (cj.txt) in testing
+* fix test get items score
+* fix test update
 
 == STAGE NEXT
 * At the end of each round, ask user continue or quit.

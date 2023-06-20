@@ -29,7 +29,11 @@ impl CJDatabase {
     }
 
     pub fn load(&mut self) {
-        if let Ok(lines) = self.read_lines(DATA_FILE) {
+        self.load_from(DATA_FILE);
+    }
+
+    pub fn load_from(&mut self, filepath: &str) {
+        if let Ok(lines) = self.read_lines(filepath) {
             for line in lines {
                 if let Ok(buf) = line {
                     let parts: Vec<&str> = buf.split(",").collect();
@@ -49,8 +53,13 @@ impl CJDatabase {
         println!("{} records imported", self.v.len());
     }
 
-    // Save the current database to disk in a safe way.
+    // Save the current database with the default filename.
     pub fn save(&mut self) {
+        self.save_as(DATA_FILE);
+    }
+
+    // Save the current database to disk in a safe way.
+    pub fn save_as(&mut self, filepath: &str) {
         // save to a temp file
         let mut file = File::create(TEMP_FILE).expect("create failed");
         for x in &self.v {
@@ -59,10 +68,10 @@ impl CJDatabase {
         }
 
         // delete original file
-        fs::remove_file(DATA_FILE).expect("unable to remove old data file");
+        fs::remove_file(filepath).expect("unable to remove old data file");
 
         // rename temp file to original file
-        fs::rename(TEMP_FILE, DATA_FILE).expect("unable to rename data file")
+        fs::rename(TEMP_FILE, filepath).expect("unable to rename data file")
     }
 
     // Given a set of chinese characters, return a random subset of it.
@@ -236,10 +245,20 @@ fn test_db_get_items_score() {
 
 #[test]
 fn test_db_sort() {
-    let mut db = CJDatabase { v: Vec::new() };
-    db.load();
-    db.sort();
-    db.save();
+    let mut db1 = CJDatabase { v: Vec::new() };
+    db1.load_from("./unittest/cj01.csv");
+
+    let mut db2 = CJDatabase { v: Vec::new() };
+    db2.load_from("./unittest/cj02.csv");
+    db2.sort();
+
+    let matching = db1
+        .v
+        .iter()
+        .zip(&db2.v)
+        .filter(|&(a, b)| a.code == b.code)
+        .count();
+    assert!(db1.v.len() == matching);
 }
 
 #[test]

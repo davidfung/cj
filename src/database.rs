@@ -224,7 +224,7 @@ impl CJDatabase {
 #[test]
 fn test_db_update() {
     let mut db = CJDatabase { v: Vec::new() };
-    db.load();
+    db.load_from("./unittest/cj01.csv");
     let items = db.get_items_random(2);
     for i in &items {
         println!("{} {} {}", i.char, i.code, i.score);
@@ -236,7 +236,7 @@ fn test_db_update() {
 #[test]
 fn test_db_get_items_score() {
     let mut db = CJDatabase { v: Vec::new() };
-    db.load();
+    db.load_from("./unittest/cj01.csv");
     let items = db.get_items_score(10);
     for (i, ch) in items.iter().enumerate() {
         println!("#{} {} {} {}", i, ch.char, ch.code, ch.score);

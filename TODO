@@ -1,19 +1,18 @@
 = TODO
 
-== STAGE 7
-* add dependency injection (cj.txt) in testing
-* fix test get items score
-* fix test update
+== STAGE 8
+* Dedup the data file
+* Dedup test
+
+== STAGE 9
+* At the end of each round, ask user continue or quit.
 
 == STAGE NEXT
-* At the end of each round, ask user continue or quit.
-* dedup the data file
-
-== STAGE NEXT NEXT
-* color highlighting, use text-colorizer crate
-* per user score, require login no password
+* Color highlighting, use text-colorizer crate
+* Per user score, require login no password
 * CLI option to reset scores
 * CLI option to set number of questions in a challenge
-* use strategy design pattern with trait
-* separate practice round after the test
-* csv not exists -> create skeleton csv based on hard-coded data
+* Use strategy design pattern with trait
+* Implement copy trait in struct Character
+* Separate practice round after the test
+* CSV not exists -> create skeleton csv based on hard-coded data

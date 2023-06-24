@@ -258,7 +258,7 @@ fn test_db_sort() {
         .v
         .iter()
         .zip(&db2.v)
-        .filter(|&(a, b)| a.code == b.code)
+        .filter(|&(a, b)| a.code == b.code && a.char == b.char && a.score == b.score)
         .count();
 
     assert!(db1.v.len() == matching);

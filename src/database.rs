@@ -254,15 +254,32 @@ fn test_db_sort() {
 
     assert!(db1.v.len() == db2.v.len());
 
-    let matching = db1
+    let matched = db1
         .v
         .iter()
         .zip(&db2.v)
-        .filter(|&(a, b)| a.code == b.code && a.char == b.char && a.score == b.score)
+        .filter(|(a, b)| a.code == b.code && a.char == b.char && a.score == b.score)
         .count();
 
-    assert!(db1.v.len() == matching);
+    assert!(db1.v.len() == matched);
 }
 
 #[test]
-fn test_db_dedup() {}
+fn test_db_dedup() {
+    let mut db1 = CJDatabase { v: Vec::new() };
+    db1.load_from("./unittest/cj01.csv");
+
+    let mut db2 = CJDatabase { v: Vec::new() };
+    db2.load_from("./unittest/cj01.csv");
+
+    assert!(db1.v.len() == db2.v.len());
+
+    let matched = db1
+        .v
+        .iter()
+        .zip(&db2.v)
+        .filter(|(a, b)| a.code == b.code && a.char == b.char && a.score == b.score)
+        .count();
+
+    assert!(db1.v.len() == matched);
+}

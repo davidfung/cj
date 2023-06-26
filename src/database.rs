@@ -270,7 +270,7 @@ fn test_db_dedup() {
     db1.load_from("./unittest/cj01.csv");
 
     let mut db2 = CJDatabase { v: Vec::new() };
-    db2.load_from("./unittest/cj01.csv");
+    db2.load_from("./unittest/cj03.csv");
 
     assert!(db1.v.len() == db2.v.len());
 

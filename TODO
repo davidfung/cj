@@ -3,6 +3,7 @@
 == STAGE 8
 * Dedup the data file
 * Dedup test
+* Fix two char same code bug
 
 == STAGE 9
 * At the end of each round, ask user continue or quit.

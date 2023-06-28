@@ -218,7 +218,22 @@ impl CJDatabase {
 
     // De-duplication the database records by code.
     // Assume the records are already sorted.
-    pub fn dedup(&mut self) {}
+    pub fn dedup(&mut self) {
+        let mut lastcode = "-1".to_string();
+        let mut v2 = Vec::<Chinese>::new();
+        for ch in self.v.iter() {
+            if ch.code == lastcode {
+                continue;
+            }
+            v2.push(Chinese {
+                char: ch.char.clone(),
+                code: ch.code.clone(),
+                score: ch.score,
+            });
+            lastcode = ch.code.clone();
+        }
+        self.v = v2;
+    }
 }
 
 #[test]
@@ -266,20 +281,27 @@ fn test_db_sort() {
 
 #[test]
 fn test_db_dedup() {
-    let mut db1 = CJDatabase { v: Vec::new() };
-    db1.load_from("./unittest/cj01.csv");
+    let data = [
+        ("./unittest/cj03a.csv", "./unittest/cj03b.csv"),
+        ("./unittest/cj03c.csv", "./unittest/cj03d.csv"),
+    ];
 
-    let mut db2 = CJDatabase { v: Vec::new() };
-    db2.load_from("./unittest/cj03.csv");
+    for (a, b) in data {
+        let mut db1 = CJDatabase { v: Vec::new() };
+        db1.load_from(a);
 
-    assert!(db1.v.len() == db2.v.len());
+        let mut db2 = CJDatabase { v: Vec::new() };
+        db2.load_from(b);
+        db2.dedup();
+        println!("{}", db2.v.len());
 
-    let matched = db1
-        .v
-        .iter()
-        .zip(&db2.v)
-        .filter(|(a, b)| a.code == b.code && a.char == b.char && a.score == b.score)
-        .count();
+        let matched = db1
+            .v
+            .iter()
+            .zip(&db2.v)
+            .filter(|(a, b)| a.code == b.code && a.char == b.char && a.score == b.score)
+            .count();
 
-    assert!(db1.v.len() == matched);
+        assert!(db1.v.len() == matched);
+    }
 }

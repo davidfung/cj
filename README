@@ -27,3 +27,4 @@ Chinese compatible font such as NSimSun.
 * C: integer score, indicates correct count, can be negative
 * Blank lines are allowed
 * The program will automatically convert cangjie codes to lowercase.
+* One code can represent multiple characters.

@@ -213,16 +213,18 @@ impl CJDatabase {
 
     // Sort the database records by code
     pub fn sort(&mut self) {
-        self.v.sort_by_key(|x| x.code.clone());
+        self.v.sort_by_key(|x| format!("{} {}", x.code, x.char));
     }
 
-    // De-duplication the database records by code.
-    // Assume the records are already sorted.
+    // De-duplication the database records by code+char.
+    // code+char because one code can represent multiple chars.
+    // Assume the records are already sorted by code+char.
     pub fn dedup(&mut self) {
         let mut lastcode = "-1".to_string();
+        let mut lastchar = "".to_string();
         let mut v2 = Vec::<Chinese>::new();
         for ch in self.v.iter() {
-            if ch.code == lastcode {
+            if ch.code == lastcode && ch.char == lastchar {
                 continue;
             }
             v2.push(Chinese {
@@ -231,6 +233,7 @@ impl CJDatabase {
                 score: ch.score,
             });
             lastcode = ch.code.clone();
+            lastchar = ch.char.clone();
         }
         self.v = v2;
     }

@@ -68,7 +68,9 @@ impl CJDatabase {
         }
 
         // delete original file
-        fs::remove_file(filepath).expect("unable to remove old data file");
+        if std::path::Path::new(filepath).exists() {
+            fs::remove_file(filepath).expect("unable to remove old data file");
+        }
 
         // rename temp file to original file
         fs::rename(TEMP_FILE, filepath).expect("unable to rename data file")
@@ -254,7 +256,7 @@ fn test_db_update() {
 #[test]
 fn test_db_get_items_score() {
     let mut db = CJDatabase { v: Vec::new() };
-    db.load_from("./unittest/cj01.csv");
+    db.load_from("./unittest/cj04.csv");
     let items = db.get_items_score(10);
     for (i, ch) in items.iter().enumerate() {
         println!("#{} {} {} {}", i, ch.char, ch.code, ch.score);
@@ -264,12 +266,13 @@ fn test_db_get_items_score() {
 #[test]
 fn test_db_sort() {
     let mut db1 = CJDatabase { v: Vec::new() };
-    db1.load_from("./unittest/cj01.csv");
+    db1.load_from("./unittest/cj02a.csv");
 
     let mut db2 = CJDatabase { v: Vec::new() };
-    db2.load_from("./unittest/cj02.csv");
+    db2.load_from("./unittest/cj02b.csv");
     db2.sort();
 
+    println!("db1 len={}, db2 len={}", db1.v.len(), db2.v.len());
     assert!(db1.v.len() == db2.v.len());
 
     let matched = db1

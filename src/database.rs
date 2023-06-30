@@ -311,3 +311,13 @@ fn test_db_dedup() {
         assert!(db1.v.len() == matched);
     }
 }
+
+#[test]
+fn test_db_dedup_2() {
+    let datafile = "./unittest/cj03e.csv";
+
+    let mut db = CJDatabase { v: Vec::new() };
+    db.load_from(datafile);
+    db.dedup();
+    println!("{}", db.v.len());
+}

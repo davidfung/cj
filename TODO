@@ -4,7 +4,7 @@
 * [x] Dedup the data file
 * [x] Dedup test
 * [x] Fix two char same code bug
-* Fix unit test for sort
+* [x] Fix unit test for sort
 * Retain lowest score when dedup
 
 == STAGE 9

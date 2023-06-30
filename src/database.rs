@@ -78,6 +78,7 @@ impl CJDatabase {
 
     // Given a set of chinese characters, return a random subset of it.
     // This implementation allows duplicates in the subset.
+    #[allow(dead_code)]
     pub fn get_items_random(&self, item_count: i32) -> Vec<Chinese> {
         let mut q = Vec::new();
 
@@ -222,11 +223,23 @@ impl CJDatabase {
     // code+char because one code can represent multiple chars.
     // Assume the records are already sorted by code+char.
     pub fn dedup(&mut self) {
-        let mut lastcode = "-1".to_string();
-        let mut lastchar = "".to_string();
+        let mut last = Chinese {
+            code: "-1".to_string(),
+            char: "".to_string(),
+            score: 0,
+        };
         let mut v2 = Vec::<Chinese>::new();
         for ch in self.v.iter() {
-            if ch.code == lastcode && ch.char == lastchar {
+            if ch.code == last.code && ch.char == last.char {
+                if ch.score < last.score {
+                    v2.pop();
+                    v2.push(Chinese {
+                        char: ch.char.clone(),
+                        code: ch.code.clone(),
+                        score: ch.score,
+                    });
+                    last.score = ch.score;
+                }
                 continue;
             }
             v2.push(Chinese {
@@ -234,8 +247,9 @@ impl CJDatabase {
                 code: ch.code.clone(),
                 score: ch.score,
             });
-            lastcode = ch.code.clone();
-            lastchar = ch.char.clone();
+            last.code = ch.code.clone();
+            last.char = ch.char.clone();
+            last.score = ch.score;
         }
         self.v = v2;
     }
@@ -313,11 +327,32 @@ fn test_db_dedup() {
 }
 
 #[test]
+// test dedup keep lowest score
 fn test_db_dedup_2() {
     let datafile = "./unittest/cj03e.csv";
 
     let mut db = CJDatabase { v: Vec::new() };
     db.load_from(datafile);
     db.dedup();
+
+    let x = db.v.iter().find(|x| x.code == "aombc");
+    match x {
+        Some(ch) => assert_eq!(ch.score, -9),
+        None => panic!("unable to find target character"),
+    }
+
+    let x = db.v.iter().find(|x| x.code == "cvmi");
+    match x {
+        Some(ch) => assert_eq!(ch.score, -5),
+        None => panic!("unable to find target character"),
+    }
+
+    let x = db.v.iter().find(|x| x.code == "ybog");
+    match x {
+        Some(ch) => assert_eq!(ch.score, -2),
+        None => panic!("unable to find target character"),
+    }
+
+    // db.save_as("./unittest/output.csv"); //remove afterward
     println!("{}", db.v.len());
 }

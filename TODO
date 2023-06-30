@@ -6,7 +6,6 @@
 * [x] Fix two char same code bug
 * [x] Fix unit test for sort
 * [x] Retain lowest score when dedup
-* Fix test all tests cj.csv deleted bug
 
 == STAGE 9
 * At the end of each round, ask user continue or quit.

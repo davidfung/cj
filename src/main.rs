@@ -57,7 +57,8 @@ fn main() {
     let mut db = CJDatabase { v: Vec::new() };
     db.load();
     db.sort();
-    // db.dedup();
+    db.dedup();
+    db.save();
 
     loop {
         let items = db.get_items_score(QUESTION_COUNT);

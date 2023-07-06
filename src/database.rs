@@ -50,7 +50,7 @@ impl CJDatabase {
                 }
             }
         }
-        println!("{} records imported", self.v.len());
+        println!("Records loaded: {}", self.v.len());
     }
 
     // Save the current database with the default filename.
@@ -217,12 +217,14 @@ impl CJDatabase {
     // Sort the database records by code
     pub fn sort(&mut self) {
         self.v.sort_by_key(|x| format!("{} {}", x.code, x.char));
+        println!("Records sorted")
     }
 
     // De-duplication the database records by code+char.
     // code+char because one code can represent multiple chars.
     // Assume the records are already sorted by code+char.
     pub fn dedup(&mut self) {
+        let mut counter = 0;
         let mut last = Chinese {
             code: "-1".to_string(),
             char: "".to_string(),
@@ -231,6 +233,7 @@ impl CJDatabase {
         let mut v2 = Vec::<Chinese>::new();
         for ch in self.v.iter() {
             if ch.code == last.code && ch.char == last.char {
+                counter = counter + 1;
                 if ch.score < last.score {
                     v2.pop();
                     v2.push(Chinese {
@@ -252,6 +255,7 @@ impl CJDatabase {
             last.score = ch.score;
         }
         self.v = v2;
+        println!("Duplicates removed: {}", counter);
     }
 }
 

@@ -9,7 +9,7 @@ Chinese compatible font such as NSimSun.
 
 == Features
 * Keep score on each character.
-* At the beginning of the game, load the database once, sort and dedup.
+* At the beginning of the game, load the database once, sort and dedup and save once.
 * At the end of each round, update the database with the scores.
 * Use the scores to pick the characters the user most unfamiliar with.
 

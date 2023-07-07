@@ -1,17 +1,20 @@
 = TODO
 
 == STAGE 9
+* CLI option to set number of questions in a challenge
+* CSV not exists -> create skeleton csv based on hard-coded data
+* Show a banner on startup
+* show 1/10, 2/10, etc
 * At the end of each round, ask user continue or quit.
-* Color highlighting, use text-colorizer crate
-* Implement copy trait in struct Character
+* source control cj0.csv instead of cj.csv
 
 == STAGE 10
 * CLI option to reset scores
-* CLI option to set number of questions in a challenge
+* Color highlighting, use text-colorizer crate
+* Implement copy trait in struct Character
 
 == STAGE NEXT
-* Keep high score, model after arcade game
+* high score board, model after arcade game
 * Per user score, require login no password
 * Use strategy design pattern with trait in characters selection
 * Separate practice round after the test
-* CSV not exists -> create skeleton csv based on hard-coded data

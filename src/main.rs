@@ -53,7 +53,12 @@ fn run(items: Vec<Chinese>) -> Vec<Chinese> {
     results
 }
 
+fn show_banner() {
+    print!("*************\nB A N N E R\n*************\n")
+}
 fn main() {
+    show_banner();
+
     let mut db = CJDatabase { v: Vec::new() };
     db.load();
     db.sort();

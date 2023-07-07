@@ -6,17 +6,19 @@ Chinese compatible font such as NSimSun.
 == Play
 * Each round has 10 challenges.
 * At the end of each round, ask user continue or quit.
-
-== Features
 * Keep score on each character.
-* At the beginning of the game, load the database once, sort and dedup and save once.
-* At the end of each round, update the database with the scores.
 * Use the scores to pick the characters the user most unfamiliar with.
 
 == Database
 * Data in external file, which can be edited by the user with a text editor.
+* At the beginning of the game, load the database once, sort and dedup and
+  save once before the game begins.
+* At the end of each round, update the database with the scores.
 * The user can just add new entries at the end.  The program will sort it 
   and remove duplicates automatically.
+* Since one code can represent more than one character, duplications are 
+  identified by code+char, but score is not included.
+* Retain the lowest score of a character when removing duplicates of it.
 
 === Data File Format
 * Text file

@@ -1,21 +1,17 @@
 = TODO
 
-== STAGE 8
-* [x] Dedup the data file
-* [x] Dedup test
-* [x] Fix two char same code bug
-* [x] Fix unit test for sort
-* [x] Retain lowest score when dedup
-
 == STAGE 9
 * At the end of each round, ask user continue or quit.
-
-== STAGE NEXT
 * Color highlighting, use text-colorizer crate
-* Per user score, require login no password
+* Implement copy trait in struct Character
+
+== STAGE 10
 * CLI option to reset scores
 * CLI option to set number of questions in a challenge
-* Use strategy design pattern with trait
-* Implement copy trait in struct Character
+
+== STAGE NEXT
+* Keep high score, model after arcade game
+* Per user score, require login no password
+* Use strategy design pattern with trait in characters selection
 * Separate practice round after the test
 * CSV not exists -> create skeleton csv based on hard-coded data

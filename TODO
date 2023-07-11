@@ -1,12 +1,12 @@
 = TODO
 
 == STAGE 9
+* source control cj0.csv instead of cj.csv
 * CLI option to set number of questions in a challenge
 * CSV not exists -> create skeleton csv based on hard-coded data
-* Show a banner on startup
+* [x] Show a banner on startup
 * show 1/10, 2/10, etc
 * At the end of each round, ask user continue or quit.
-* source control cj0.csv instead of cj.csv
 
 == STAGE 10
 * CLI option to reset scores

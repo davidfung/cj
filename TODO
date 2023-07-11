@@ -5,7 +5,7 @@
 * CLI option to set number of questions in a challenge
 * CSV not exists -> create skeleton csv based on hard-coded data
 * [x] Show a banner on startup
-* show 1/10, 2/10, etc
+* [x] show 1/10, 2/10, etc
 * At the end of each round, ask user continue or quit.
 
 == STAGE 10

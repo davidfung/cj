@@ -19,28 +19,32 @@ fn ask(prompt: &str, chinchar: &String) -> bool {
 fn run(items: Vec<Chinese>) -> Vec<Chinese> {
     let mut mark = 0;
     let mut count = 0;
-    let max_count = 10;
+    let qcount = items.len();
     let mut results: Vec<Chinese> = Vec::new();
     let mut score;
+    let mut prefix;
 
     println!("\n======== C H A L L E N G E   B E G I N S ========");
     let now = Instant::now();
 
     for mut chin in items.into_iter() {
         count = count + 1;
-        if count > max_count {
+        if count > qcount {
             break;
         }
 
-        if ask("", &chin.char) {
+        println!("");
+        prefix = format!("#{}/{} ", count, qcount);
+
+        if ask(&prefix, &chin.char) {
             score = 1;
             mark = mark + 1;
-            println!("Correct! Mark: {}/{}", mark, count);
+            println!("Correct! Score: {}", mark);
         } else {
             score = -1;
             println!(
-                "===> Wrong! {} should be \"{}\"!  Mark:{}/{}",
-                chin.char, chin.code, mark, count
+                "Wrong! {} should be \"{}\"!  Score: {}",
+                chin.char, chin.code, mark
             );
             while !ask("Practice:", &chin.char) {}
         }

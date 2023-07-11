@@ -6,6 +6,8 @@ mod database;
 
 const QUESTION_COUNT: usize = 10; // at least 10 questions
 
+// Ask user to enter a chinese char.
+// Return true if correct, false otherwise.
 fn ask(prompt: &str, chinchar: &String) -> bool {
     println!("{}[{}]?", prompt, chinchar);
     let mut line = String::new();
@@ -21,7 +23,7 @@ fn run(items: Vec<Chinese>) -> Vec<Chinese> {
     let mut results: Vec<Chinese> = Vec::new();
     let mut score;
 
-    println!("\n\n\n======== T E S T  B E G I N ========");
+    println!("\n======== C H A L L E N G E   B E G I N S ========");
     let now = Instant::now();
 
     for mut chin in items.into_iter() {
@@ -60,7 +62,7 @@ fn show_banner() {
 *                          *
 *      Welcome to the      *
 *                          *
-*          C    J          *
+*           C  J           *
 *                          *
 *        Challenges        *
 *                          *

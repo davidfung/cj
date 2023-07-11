@@ -54,10 +54,22 @@ fn run(items: Vec<Chinese>) -> Vec<Chinese> {
 }
 
 fn show_banner() {
-    print!("*************\nB A N N E R\n*************\n")
+    println!(
+        "
+****************************
+*                          *
+*      Welcome to the      *
+*                          *
+*          C    J          *
+*                          *
+*        Challenges        *
+*                          *
+****************************
+"
+    );
 }
 fn main() {
-    show_banner();
+    println!("Initiating CJ Challenges...");
 
     let mut db = CJDatabase { v: Vec::new() };
     db.load();
@@ -65,10 +77,17 @@ fn main() {
     db.dedup();
     db.save();
 
+    show_banner();
+
     loop {
         let items = db.get_items_score(QUESTION_COUNT);
         let results = run(items);
         db.update(results);
         db.save();
     }
+}
+
+#[test]
+fn test_show_banner() {
+    show_banner();
 }

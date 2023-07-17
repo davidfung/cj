@@ -1,5 +1,7 @@
 use std::time::Instant;
 
+use console::Term;
+
 use database::{CJDatabase, Chinese};
 
 mod database;
@@ -74,6 +76,22 @@ fn show_banner() {
 "
     );
 }
+
+fn ask_continue(msg: &str) -> bool {
+    println!("{}\n", msg);
+    let stdout = Term::buffered_stdout();
+
+    loop {
+        if let Ok(ch) = stdout.read_char() {
+            match ch {
+                'c' => return true,
+                'q' => return false,
+                _ => continue,
+            }
+        }
+    }
+}
+
 fn main() {
     println!("Initiating CJ Challenges...");
 
@@ -84,8 +102,11 @@ fn main() {
     db.save();
 
     show_banner();
-
     loop {
+        println!("");
+        if !ask_continue("Press c to continue, q to quit.") {
+            return;
+        }
         let items = db.get_items_score(QUESTION_COUNT);
         let results = run(items);
         db.update(results);

@@ -2,14 +2,14 @@
 
 == STAGE 9
 * source control cj0.csv instead of cj.csv
-* CLI option to set number of questions in a challenge
 * CSV not exists -> create skeleton csv based on hard-coded data
 * [x] Show a banner on startup
 * [x] show 1/10, 2/10, etc
-* At the end of each round, ask user continue or quit.
+* [x] At the end of each round, ask user continue or quit.
 
 == STAGE 10
 * CLI option to reset scores
+* CLI option to set number of questions in a challenge
 * Color highlighting, use text-colorizer crate
 * Implement copy trait in struct Character
 

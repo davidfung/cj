@@ -1,4 +1,4 @@
-aombc,題,2
+aombc,題,3
 cvmi,鏘,0
 edk,決,1
 ehsk,淚,0
@@ -22,12 +22,12 @@ ixe,慶,0
 jchwk,窗,0
 jcmvh,穿,0
 jmuc,寶,0
-joni,麥,-1
+joni,麥,-2
 kchne,殺,0
 lirxu,蠅,0
 lmuo,兆,0
 lmyyy,非,1
-mgnbe,瓊,-1
+mgnbe,瓊,-2
 mgph,瑟,0
 miia,晉,0
 mrnr,哥,2
@@ -37,13 +37,13 @@ ni,夕,2
 ni,弘,0
 nk,又,1
 ohce,傻,-1
-ohqi,俄,0
+ohqi,俄,1
 olln,佛,0
 oloh,修,0
 omh,乒,0
 omi,乓,0
 pd,也,0
-psh,切,0
+psh,切,-1
 qlmo,挑,0
 qsmb,掃,0
 qtbk,撒,0
@@ -52,7 +52,7 @@ rmvh,呀,0
 sip,忍,0
 sip,慰,0
 smsim,羽,0
-suok,改,0
+suok,改,1
 tcno,歉,0
 tjks,勒,0
 tlbk,英,3
@@ -60,7 +60,7 @@ tmmv,甚,0
 tnfd,蘇,0
 tqm,差,0
 ujmf,崇,1
-vfhvp,紙,2
+vfhvp,紙,3
 vfok,變,0
 vlxh,姊,0
 yapmm,韵,0
@@ -72,7 +72,7 @@ ybok,敵,0
 ybou,遙,0
 ybr,迥,0
 yhhqm,產,0
-yhus,邊,0
+yhus,邊,1
 yhyu,遞,0
 ymihh,歲,0
 ymy,卡,0
@@ -86,6 +86,6 @@ zxah,：,0
 zxai,？,3
 zxaj,！,0
 zxbu,《,0
-zxbv,》,-2
+zxbv,》,-3
 zxcd,「,0
-zxce,」,2
+zxce,」,3

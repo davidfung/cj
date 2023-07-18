@@ -32,7 +32,12 @@ impl CJDatabase {
         self.load_from(DATA_FILE);
     }
 
-    pub fn load_from(&mut self, filepath: &str) {
+    fn load_from(&mut self, filepath: &str) {
+        // if filepath does not exist, create it with pristine data.
+        if !Path::new(filepath).exists() {
+            self.create_datafile(filepath);
+        }
+
         if let Ok(lines) = self.read_lines(filepath) {
             for line in lines {
                 if let Ok(buf) = line {
@@ -51,6 +56,10 @@ impl CJDatabase {
             }
         }
         println!("Records loaded: {}", self.v.len());
+    }
+
+    fn create_datafile(&mut self, filepath: &str) {
+        println!("Creating database:  {}", filepath);
     }
 
     // Save the current database with the default filename.

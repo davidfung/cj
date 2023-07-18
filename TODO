@@ -1,8 +1,9 @@
 = TODO
 
 == STAGE 9
+* add test for create pristine database
 * source control cj0.csv instead of cj.csv
-* CSV not exists -> create skeleton csv based on hard-coded data
+* [x] CSV not exists -> create skeleton csv based on hard-coded data
 * [x] Show a banner on startup
 * [x] show 1/10, 2/10, etc
 * [x] At the end of each round, ask user continue or quit.

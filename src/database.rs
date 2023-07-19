@@ -385,6 +385,31 @@ fn test_db_dedup_2() {
     println!("{}", db.v.len());
 }
 
+#[test]
+//zzz
+fn test_db_create_datafile() {
+    let datafile0 = "./unittest/cj05.csv";
+    let datafile1 = "./unittest/cj05_temp.csv";
+    let mut db = CJDatabase { v: Vec::new() };
+    db.create_datafile(datafile1);
+
+    let mut db1 = CJDatabase { v: Vec::new() };
+    db1.load_from(datafile0);
+
+    let mut db2 = CJDatabase { v: Vec::new() };
+    db2.load_from(datafile1);
+
+    let matched = db1
+        .v
+        .iter()
+        .zip(&db2.v)
+        .filter(|(a, b)| a.code == b.code && a.char == b.char && a.score == b.score)
+        .count();
+
+    assert!(db1.v.len() == matched);
+    fs::remove_file(datafile1).unwrap();
+}
+
 static PRISTINE: &str = "
 aombc,題,0
 cvmi,鏘,0

@@ -9,8 +9,8 @@
 * source control cj0.csv instead of cj.csv
 
 == STAGE 10
+* show score and time prominently after each round
 * rename folder unittest to tests
-* source control cj0.csv instead of cj.csv
 * CLI option to reset scores
 * CLI option to set number of questions in a challenge
 * Color highlighting, use text-colorizer crate

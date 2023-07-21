@@ -1,15 +1,19 @@
 = TODO
 
 == STAGE 10
+* rename folder unittest to tests
 * Create data folder if not exists
 * show score and time prominently after each round
-* rename folder unittest to tests
 * CLI option to reset scores
 * CLI option to set number of questions in a challenge
 * Color highlighting, use text-colorizer crate
 * Implement copy trait in struct Character
 
+== STAGE 11
+* keep high score (score+time)
+
 == STAGE NEXT
+* automatic increase build number (cargo build hook?)
 * high score board, model after arcade game
 * Per user score, require login no password
 * Use strategy design pattern with trait in characters selection

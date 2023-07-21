@@ -6,7 +6,7 @@
 * [x] Show a banner on startup
 * [x] show 1/10, 2/10, etc
 * [x] At the end of each round, ask user continue or quit.
-* source control cj0.csv instead of cj.csv
+* [x] remove cj.csv from source control
 
 == STAGE 10
 * show score and time prominently after each round

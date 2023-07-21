@@ -1,14 +1,7 @@
 = TODO
 
-== STAGE 9
-* [x] add test for create pristine database
-* [x] CSV not exists -> create skeleton csv based on hard-coded data
-* [x] Show a banner on startup
-* [x] show 1/10, 2/10, etc
-* [x] At the end of each round, ask user continue or quit.
-* [x] remove cj.csv from source control
-
 == STAGE 10
+* Create data folder if not exists
 * show score and time prominently after each round
 * rename folder unittest to tests
 * CLI option to reset scores

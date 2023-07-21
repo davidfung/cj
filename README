@@ -21,12 +21,14 @@ Chinese compatible font such as NSimSun.
 * Retain the lowest score of a character when removing duplicates of it.
 
 === Data File Format
-* Text file
+* Comma deleted text file
 * Each line: A,B,C
 * Example: aombc,題,0
 * A: cangjie code (both upper and lower cases ok)
 * B: chinese character
 * C: integer score, indicates correct count, can be negative
+* Location: <app_folder>/data/cj.csv
+* The program will automatically create a data file if not exists.
 * Blank lines are allowed
 * The program will automatically convert cangjie codes to lowercase.
 * One code can represent multiple characters.

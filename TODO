@@ -1,6 +1,7 @@
 = TODO
 
 == STAGE 10
+* fix duplicate test char bug
 * rename folder unittest to tests
 * Create data folder if not exists
 * show score and time prominently after each round

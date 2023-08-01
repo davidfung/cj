@@ -286,7 +286,7 @@ impl CJDatabase {
 #[test]
 fn test_db_update() {
     let mut db = CJDatabase { v: Vec::new() };
-    db.load_from("./unittest/cj01.csv");
+    db.load_from("./tests/cj01.csv");
     let items = db.get_items_random(2);
     for i in &items {
         println!("{} {} {}", i.char, i.code, i.score);
@@ -298,7 +298,7 @@ fn test_db_update() {
 #[test]
 fn test_db_get_items_score() {
     let mut db = CJDatabase { v: Vec::new() };
-    db.load_from("./unittest/cj04.csv");
+    db.load_from("./tests/cj04.csv");
     let items = db.get_items_score(10);
     for (i, ch) in items.iter().enumerate() {
         println!("#{} {} {} {}", i, ch.char, ch.code, ch.score);
@@ -308,10 +308,10 @@ fn test_db_get_items_score() {
 #[test]
 fn test_db_sort() {
     let mut db1 = CJDatabase { v: Vec::new() };
-    db1.load_from("./unittest/cj02a.csv");
+    db1.load_from("./tests/cj02a.csv");
 
     let mut db2 = CJDatabase { v: Vec::new() };
-    db2.load_from("./unittest/cj02b.csv");
+    db2.load_from("./tests/cj02b.csv");
     db2.sort();
 
     println!("db1 len={}, db2 len={}", db1.v.len(), db2.v.len());
@@ -330,8 +330,8 @@ fn test_db_sort() {
 #[test]
 fn test_db_dedup() {
     let data = [
-        ("./unittest/cj03a.csv", "./unittest/cj03b.csv"),
-        ("./unittest/cj03c.csv", "./unittest/cj03d.csv"),
+        ("./tests/cj03a.csv", "./tests/cj03b.csv"),
+        ("./tests/cj03c.csv", "./tests/cj03d.csv"),
     ];
 
     for (a, b) in data {
@@ -357,7 +357,7 @@ fn test_db_dedup() {
 #[test]
 // test dedup keep lowest score
 fn test_db_dedup_2() {
-    let datafile = "./unittest/cj03e.csv";
+    let datafile = "./tests/cj03e.csv";
 
     let mut db = CJDatabase { v: Vec::new() };
     db.load_from(datafile);
@@ -381,15 +381,15 @@ fn test_db_dedup_2() {
         None => panic!("unable to find target character"),
     }
 
-    // db.save_as("./unittest/output.csv"); //remove afterward
+    // db.save_as("./tests/output.csv"); //remove afterward
     println!("{}", db.v.len());
 }
 
 #[test]
 //zzz
 fn test_db_create_datafile() {
-    let datafile0 = "./unittest/cj05.csv";
-    let datafile1 = "./unittest/cj05_temp.csv";
+    let datafile0 = "./tests/cj05.csv";
+    let datafile1 = "./tests/cj05_temp.csv";
     let mut db = CJDatabase { v: Vec::new() };
     db.create_datafile(datafile1);
 

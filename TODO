@@ -1,14 +1,14 @@
 = TODO
 
 == STAGE 10
-* fix duplicate test char bug
-* rename folder unittest to tests
+* [x] rename folder unittest to tests
 * Create data folder if not exists
+* fix duplicate test char bug
+* Implement copy trait in struct Character
 * show score and time prominently after each round
 * CLI option to reset scores
 * CLI option to set number of questions in a challenge
 * Color highlighting, use text-colorizer crate
-* Implement copy trait in struct Character
 
 == STAGE 11
 * keep high score (score+time)

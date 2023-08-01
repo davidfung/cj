@@ -70,7 +70,7 @@ impl CJDatabase {
             Ok(file) => file,
         };
 
-        // Write the `LOREM_IPSUM` string to `file`, returns `io::Result<()>`
+        // Write the pristine data to `file`, returns `io::Result<()>`
         match file.write_all(PRISTINE.as_bytes()) {
             Err(why) => panic!("couldn't write to {}: {}", display, why),
             Ok(_) => println!("successfully wrote to {}", display),

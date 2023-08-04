@@ -2,7 +2,7 @@
 
 == STAGE 10
 * [x] rename folder unittest to tests
-* Create data folder if not exists
+* [x] Create data folder if not exists
 * fix duplicate test char bug
 * Implement copy trait in struct Character
 * show score and time prominently after each round

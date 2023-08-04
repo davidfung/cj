@@ -64,6 +64,10 @@ impl CJDatabase {
         let path = Path::new(filepath);
         let display = path.display();
 
+        // create directory structure if necessary
+        let parent = path.parent().unwrap();
+        fs::create_dir_all(parent).unwrap();
+
         // Open a file in write-only mode, returns `io::Result<File>`
         let mut file = match File::create(&path) {
             Err(why) => panic!("couldn't create {}: {}", display, why),
@@ -389,15 +393,21 @@ fn test_db_dedup_2() {
 //zzz
 fn test_db_create_datafile() {
     let datafile0 = "./tests/cj05.csv";
-    let datafile1 = "./tests/cj05_temp.csv";
+    let parent = "./tests/temp";
+    let datafile1 = format!("{}/{}", parent, "cj05_temp.csv");
     let mut db = CJDatabase { v: Vec::new() };
-    db.create_datafile(datafile1);
+
+    if Path::new(parent).is_dir() {
+        fs::remove_dir(parent).unwrap();
+    }
+
+    db.create_datafile(datafile1.as_str());
 
     let mut db1 = CJDatabase { v: Vec::new() };
     db1.load_from(datafile0);
 
     let mut db2 = CJDatabase { v: Vec::new() };
-    db2.load_from(datafile1);
+    db2.load_from(datafile1.as_str());
 
     let matched = db1
         .v
@@ -408,6 +418,7 @@ fn test_db_create_datafile() {
 
     assert!(db1.v.len() == matched);
     fs::remove_file(datafile1).unwrap();
+    fs::remove_dir(parent).unwrap();
 }
 
 static PRISTINE: &str = "

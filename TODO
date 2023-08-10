@@ -3,8 +3,8 @@
 == STAGE 10
 * [x] rename folder unittest to tests
 * [x] Create data folder if not exists
+* [x] Implement clone trait in struct Character
 * fix duplicate test char bug
-* Implement copy trait in struct Character
 * show score and time prominently after each round
 * CLI option to reset scores
 * CLI option to set number of questions in a challenge

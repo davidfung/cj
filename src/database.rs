@@ -8,13 +8,13 @@ use rand::thread_rng;
 const DATA_FILE: &str = r"./data/cj.csv";
 const TEMP_FILE: &str = r"./data/cjtemp.csv";
 
+#[derive(Clone, Debug, PartialEq)]
 pub struct Chinese {
     pub char: String,
     pub code: String,
     pub score: i16,
 }
 
-// A Chinese characters database implemented as a vector.
 pub struct CJDatabase {
     pub v: Vec<Chinese>,
 }
@@ -114,11 +114,7 @@ impl CJDatabase {
         while count < item_count {
             count = count + 1;
             let question = self.v.choose(&mut thread_rng()).unwrap();
-            let c = Chinese {
-                char: question.char.clone(),
-                code: question.code.clone(),
-                score: question.score,
-            };
+            let c = question.clone();
             q.push(c);
         }
         return q;
@@ -142,17 +138,11 @@ impl CJDatabase {
             .iter()
             .filter(|x| x.score < 0)
             .choose_multiple(&mut thread_rng(), quota)
-            .iter()
         {
             if items.len() >= item_count {
                 break;
             }
-            let c = Chinese {
-                char: q.char.clone(),
-                code: q.code.clone(),
-                score: q.score,
-            };
-            items.push(c);
+            items.push(q.clone());
         }
 
         // new
@@ -161,17 +151,11 @@ impl CJDatabase {
             .iter()
             .filter(|x| x.score == 0)
             .choose_multiple(&mut thread_rng(), quota)
-            .iter()
         {
             if items.len() >= item_count {
                 break;
             }
-            let c = Chinese {
-                char: q.char.clone(),
-                code: q.code.clone(),
-                score: q.score,
-            };
-            items.push(c);
+            items.push(q.clone());
         }
 
         // easy
@@ -180,17 +164,11 @@ impl CJDatabase {
             .iter()
             .filter(|x| x.score > 0 && x.score <= 3)
             .choose_multiple(&mut thread_rng(), quota)
-            .iter()
         {
             if items.len() >= item_count {
                 break;
             }
-            let c = Chinese {
-                char: q.char.clone(),
-                code: q.code.clone(),
-                score: q.score,
-            };
-            items.push(c);
+            items.push(q.clone());
         }
 
         // very easy
@@ -201,32 +179,16 @@ impl CJDatabase {
                 .iter()
                 .filter(|x| x.score > 3)
                 .choose_multiple(&mut thread_rng(), rest)
-                .iter()
             {
-                let c = Chinese {
-                    char: q.char.clone(),
-                    code: q.code.clone(),
-                    score: q.score,
-                };
-                items.push(c);
+                items.push(q.clone());
             }
         }
 
         // random
         rest = item_count - items.len();
         if rest > 0 {
-            for q in self
-                .v
-                .iter()
-                .choose_multiple(&mut thread_rng(), rest)
-                .iter()
-            {
-                let c = Chinese {
-                    char: q.char.clone(),
-                    code: q.code.clone(),
-                    score: q.score,
-                };
-                items.push(c);
+            for q in self.v.iter().choose_multiple(&mut thread_rng(), rest) {
+                items.push(q.clone());
             }
         }
 
@@ -419,6 +381,17 @@ fn test_db_create_datafile() {
     assert!(db1.v.len() == matched);
     fs::remove_file(datafile1).unwrap();
     fs::remove_dir(parent).unwrap();
+}
+
+#[test]
+fn test_char_clone() {
+    let ch1 = Chinese {
+        char: "天".to_string(),
+        code: "mk".to_string(),
+        score: 0,
+    };
+    let ch2 = ch1.clone();
+    assert_eq!(ch1, ch2);
 }
 
 static PRISTINE: &str = "

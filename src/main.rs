@@ -98,7 +98,7 @@ fn ask_continue(msg: &str) -> bool {
 
     loop {
         if let Ok(ch) = stdout.read_char() {
-            match ch {
+            match ch.to_ascii_lowercase() {
                 'c' => return true,
                 'q' => return false,
                 _ => continue,

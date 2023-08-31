@@ -1,4 +1,4 @@
-use std::time::Instant;
+use std::time::{Duration, Instant};
 
 use console::Term;
 
@@ -56,7 +56,7 @@ fn run(items: Vec<Chinese>) -> Vec<Chinese> {
     }
 
     let elapsed_time = now.elapsed();
-    println!("Time taken: {} seconds", elapsed_time.as_secs());
+    show_score(mark, qcount, elapsed_time);
 
     results
 }
@@ -74,6 +74,21 @@ fn show_banner() {
 *                          *
 ****************************
 "
+    );
+}
+
+fn show_score(score: i16, max_score: usize, time_taken: Duration) {
+    println!(
+        "
+****************************
+*                          *
+*   Score: {} %            *
+*    Time: {} seconds      *
+*                          *
+****************************
+",
+        (score as usize * 100 / max_score) as u16,
+        time_taken.as_secs()
     );
 }
 

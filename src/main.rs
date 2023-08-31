@@ -80,12 +80,12 @@ fn show_banner() {
 fn show_score(score: i16, max_score: usize, time_taken: Duration) {
     println!(
         "
-****************************
-*                          *
-*   Score: {} %            *
-*    Time: {} seconds      *
-*                          *
-****************************
+***************************
+*                         *
+*   Score: {:4.0} %         *
+*    Time: {: >4} seconds   *
+*                         *
+***************************
 ",
         (score as usize * 100 / max_score) as u16,
         time_taken.as_secs()

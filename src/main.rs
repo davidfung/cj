@@ -3,6 +3,7 @@ use std::time::{Duration, Instant};
 use console::Term;
 
 use database::{CJDatabase, Chinese};
+use owo_colors::OwoColorize;
 
 mod database;
 
@@ -63,6 +64,7 @@ fn run(items: Vec<Chinese>) -> Vec<Chinese> {
 
 fn show_banner() {
     println!(
+        "{}",
         "
 ****************************
 *                          *
@@ -74,11 +76,12 @@ fn show_banner() {
 *                          *
 ****************************
 "
+        .bright_green()
     );
 }
 
 fn show_score(score: i16, max_score: usize, time_taken: Duration) {
-    println!(
+    let msg = format!(
         "
 ***************************
 *                         *
@@ -90,6 +93,7 @@ fn show_score(score: i16, max_score: usize, time_taken: Duration) {
         (score as usize * 100 / max_score) as u16,
         time_taken.as_secs()
     );
+    println!("{}", msg.bright_yellow());
 }
 
 fn ask_continue(msg: &str) -> bool {

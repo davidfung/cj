@@ -1,14 +1,20 @@
 = TODO
 
 == STAGE 11
-* show version number
-* CLI option to reset scores
+* select chars with score <= 0 more
 * fix duplicate test char bug
-* CLI option to set number of questions in a challenge
-* Color highlighting, use text-colorizer crate
-* keep high score (score+time)
+* user input allow chinese char (i.e. continue and quit)
+* provide instruction for editing cj data file
+* provide easier to understanding scoring system
 
 == STAGE 12
+* create a new branch for score
+
+== STAGE 13
+* show version number
+* CLI option to reset scores
+* CLI option to set number of questions in a challenge
+* keep high score (score+time)
 
 == STAGE NEXT
 * automatic increase build number (cargo build hook?)

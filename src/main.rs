@@ -20,11 +20,11 @@ fn ask(prompt: &str, chinchar: &String) -> bool {
 }
 
 fn run(items: Vec<Chinese>) -> Vec<Chinese> {
-    let mut mark = 0;
+    let mut mark = 0; // for this challenge
     let mut count = 0;
     let qcount = items.len();
     let mut results: Vec<Chinese> = Vec::new();
-    let mut score;
+    let mut score; // character statistics
     let mut prefix;
 
     println!("\n======== C H A L L E N G E   B E G I N S ========");
@@ -53,6 +53,9 @@ fn run(items: Vec<Chinese>) -> Vec<Chinese> {
         }
 
         chin.score += score;
+        if chin.score == 0 {
+            chin.score += score;
+        }
         results.push(chin);
     }
 

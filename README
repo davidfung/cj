@@ -27,6 +27,7 @@ Chinese compatible font such as NSimSun.
 * A: cangjie code (both upper and lower cases ok)
 * B: chinese character
 * C: integer score, indicates correct count, can be negative
+     zero means never used, -1 will jump to 1, and 1 will drop to -1
 * Location: <app_folder>/data/cj.csv
 * The program will automatically create a data file if not exists.
 * Blank lines are allowed

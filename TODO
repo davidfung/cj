@@ -6,6 +6,7 @@
 * user input allow chinese char (i.e. continue and quit)
 * provide instruction for editing cj data file
 * provide easier to understanding scoring system
+* evalulate TUI
 
 == STAGE 12
 * create a new branch for score

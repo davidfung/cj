@@ -102,9 +102,9 @@ fn ask_continue(msg: &str) -> bool {
 
     loop {
         if let Ok(ch) = stdout.read_char() {
-            match ch.to_ascii_lowercase() {
-                'c' => return true,
-                'q' => return false,
+            match ch.to_ascii_uppercase() {
+                'C' => return true,
+                'Q' => return false,
                 _ => continue,
             }
         }
@@ -123,7 +123,7 @@ fn main() {
     show_banner();
     loop {
         println!("");
-        if !ask_continue("Press c to continue, q to quit.") {
+        if !ask_continue("Press C to continue, Q to quit.") {
             return;
         }
         let items = db.get_items_score(QUESTION_COUNT);

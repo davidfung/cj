@@ -3,10 +3,10 @@
 == STAGE 11
 * select chars with score <= 0 more
 * fix duplicate test char bug
-* user input allow chinese char (i.e. continue and quit)
 * provide instruction for editing cj data file
 * provide easier to understanding scoring system
 * evalulate TUI
+x user input allow chinese input method (i.e. continue and quit)
 
 == STAGE 12
 * create a new branch for score

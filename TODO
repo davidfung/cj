@@ -6,6 +6,7 @@
 * provide instruction for editing cj data file
 * provide easier to understanding scoring system
 * evalulate TUI
+* build a complete cj database
 x user input allow chinese input method (i.e. continue and quit)
 x reserve zero score for blank new character
 

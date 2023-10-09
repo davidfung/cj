@@ -129,7 +129,7 @@ fn main() {
         if !ask_continue("Press C to continue, Q to quit.") {
             return;
         }
-        let items = db.get_items_score(QUESTION_COUNT);
+        let items = db.get_items_smart(QUESTION_COUNT);
         let results = run(items);
         db.update(results);
         db.save();

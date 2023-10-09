@@ -127,7 +127,77 @@ impl CJDatabase {
     // at most 33%: 0 < score <= 3 [easy]
     // the remaining: score > 3    [very easy]
     // rest                        [random]
+    #[allow(dead_code)]
     pub fn get_items_score(&self, item_count: usize) -> Vec<Chinese> {
+        let mut items = Vec::new();
+        let quota = item_count / 3; // 33%
+        let mut rest;
+
+        // difficult
+        for q in self
+            .v
+            .iter()
+            .filter(|x| x.score < 0)
+            .choose_multiple(&mut thread_rng(), quota)
+        {
+            if items.len() >= item_count {
+                break;
+            }
+            items.push(q.clone());
+        }
+
+        // new
+        for q in self
+            .v
+            .iter()
+            .filter(|x| x.score == 0)
+            .choose_multiple(&mut thread_rng(), quota)
+        {
+            if items.len() >= item_count {
+                break;
+            }
+            items.push(q.clone());
+        }
+
+        // easy
+        for q in self
+            .v
+            .iter()
+            .filter(|x| x.score > 0 && x.score <= 3)
+            .choose_multiple(&mut thread_rng(), quota)
+        {
+            if items.len() >= item_count {
+                break;
+            }
+            items.push(q.clone());
+        }
+
+        // very easy
+        rest = item_count - items.len();
+        if rest > 0 {
+            for q in self
+                .v
+                .iter()
+                .filter(|x| x.score > 3)
+                .choose_multiple(&mut thread_rng(), rest)
+            {
+                items.push(q.clone());
+            }
+        }
+
+        // random
+        rest = item_count - items.len();
+        if rest > 0 {
+            for q in self.v.iter().choose_multiple(&mut thread_rng(), rest) {
+                items.push(q.clone());
+            }
+        }
+
+        items.shuffle(&mut thread_rng());
+        items
+    }
+
+    pub fn get_items_smart(&self, item_count: usize) -> Vec<Chinese> {
         let mut items = Vec::new();
         let quota = item_count / 3; // 33%
         let mut rest;

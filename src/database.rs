@@ -12,7 +12,7 @@ const TEMP_FILE: &str = r"./data/cjtemp.csv";
 pub struct Chinese {
     pub char: String,
     pub code: String,
-    pub score: i16,
+    pub rating: i16,
 }
 
 pub struct CJDatabase {
@@ -49,7 +49,7 @@ impl CJDatabase {
                         self.v.push(Chinese {
                             char: char,
                             code: code,
-                            score: score,
+                            rating: score,
                         });
                     }
                 }
@@ -91,7 +91,7 @@ impl CJDatabase {
         // save to a temp file
         let mut file = File::create(TEMP_FILE).expect("create failed");
         for x in &self.v {
-            let s = format!("{},{},{}\n", x.code, x.char, x.score);
+            let s = format!("{},{},{}\n", x.code, x.char, x.rating);
             file.write(s.as_bytes()).expect("data file write failed");
         }
 
@@ -137,7 +137,7 @@ impl CJDatabase {
         for q in self
             .v
             .iter()
-            .filter(|x| x.score < 0)
+            .filter(|x| x.rating < 0)
             .choose_multiple(&mut thread_rng(), quota)
         {
             if items.len() >= item_count {
@@ -150,7 +150,7 @@ impl CJDatabase {
         for q in self
             .v
             .iter()
-            .filter(|x| x.score == 0)
+            .filter(|x| x.rating == 0)
             .choose_multiple(&mut thread_rng(), quota)
         {
             if items.len() >= item_count {
@@ -163,7 +163,7 @@ impl CJDatabase {
         for q in self
             .v
             .iter()
-            .filter(|x| x.score > 0 && x.score <= 3)
+            .filter(|x| x.rating > 0 && x.rating <= 3)
             .choose_multiple(&mut thread_rng(), quota)
         {
             if items.len() >= item_count {
@@ -178,7 +178,7 @@ impl CJDatabase {
             for q in self
                 .v
                 .iter()
-                .filter(|x| x.score > 3)
+                .filter(|x| x.rating > 3)
                 .choose_multiple(&mut thread_rng(), rest)
             {
                 items.push(q.clone());
@@ -213,7 +213,7 @@ impl CJDatabase {
         for q in self
             .v
             .iter()
-            .filter(|x| x.score < 0)
+            .filter(|x| x.rating < 0)
             .choose_multiple(&mut rng, quota)
         {
             if items.len() >= item_count {
@@ -226,7 +226,7 @@ impl CJDatabase {
         for q in self
             .v
             .iter()
-            .filter(|x| x.score == 0)
+            .filter(|x| x.rating == 0)
             .choose_multiple(&mut rng, quota)
         {
             if items.len() >= item_count {
@@ -239,7 +239,7 @@ impl CJDatabase {
         for q in self
             .v
             .iter()
-            .filter(|x| x.score > 0 && x.score <= 3)
+            .filter(|x| x.rating > 0 && x.rating <= 3)
             .choose_multiple(&mut rng, quota)
         {
             if items.len() >= item_count {
@@ -254,7 +254,7 @@ impl CJDatabase {
             for q in self
                 .v
                 .iter()
-                .filter(|x| x.score > 3)
+                .filter(|x| x.rating > 3)
                 .choose_multiple(&mut rng, rest)
             {
                 items.push(q.clone());
@@ -277,7 +277,7 @@ impl CJDatabase {
     pub fn update(&mut self, items: Vec<Chinese>) {
         for y in items {
             let index = self.v.iter().position(|x| x.code == y.code).unwrap();
-            self.v[index].score = y.score;
+            self.v[index].rating = y.rating;
         }
     }
 
@@ -295,31 +295,31 @@ impl CJDatabase {
         let mut last = Chinese {
             code: "-1".to_string(),
             char: "".to_string(),
-            score: 0,
+            rating: 0,
         };
         let mut v2 = Vec::<Chinese>::new();
         for ch in self.v.iter() {
             if ch.code == last.code && ch.char == last.char {
                 counter = counter + 1;
-                if ch.score < last.score {
+                if ch.rating < last.rating {
                     v2.pop();
                     v2.push(Chinese {
                         char: ch.char.clone(),
                         code: ch.code.clone(),
-                        score: ch.score,
+                        rating: ch.rating,
                     });
-                    last.score = ch.score;
+                    last.rating = ch.rating;
                 }
                 continue;
             }
             v2.push(Chinese {
                 char: ch.char.clone(),
                 code: ch.code.clone(),
-                score: ch.score,
+                rating: ch.rating,
             });
             last.code = ch.code.clone();
             last.char = ch.char.clone();
-            last.score = ch.score;
+            last.rating = ch.rating;
         }
         self.v = v2;
         println!("Duplicates removed: {}", counter);
@@ -332,7 +332,7 @@ fn test_db_update() {
     db.load_from("./tests/cj01.csv");
     let items = db.get_items_random(2);
     for i in &items {
-        println!("{} {} {}", i.char, i.code, i.score);
+        println!("{} {} {}", i.char, i.code, i.rating);
     }
     db.update(items);
     db.save();
@@ -344,7 +344,7 @@ fn test_db_get_items_score() {
     db.load_from("./tests/cj04.csv");
     let items = db.get_items_score(10);
     for (i, ch) in items.iter().enumerate() {
-        println!("#{} {} {} {}", i, ch.char, ch.code, ch.score);
+        println!("#{} {} {} {}", i, ch.char, ch.code, ch.rating);
     }
 }
 
@@ -355,7 +355,7 @@ fn test_db_get_items_smart() {
     db.load_from("./data/cj.csv");
     let items = db.get_items_smart(10);
     for (i, ch) in items.iter().enumerate() {
-        println!("#{} {} {} {}", i, ch.char, ch.code, ch.score);
+        println!("#{} {} {} {}", i, ch.char, ch.code, ch.rating);
     }
 }
 
@@ -375,7 +375,7 @@ fn test_db_sort() {
         .v
         .iter()
         .zip(&db2.v)
-        .filter(|(a, b)| a.code == b.code && a.char == b.char && a.score == b.score)
+        .filter(|(a, b)| a.code == b.code && a.char == b.char && a.rating == b.rating)
         .count();
 
     assert!(db1.v.len() == matched);
@@ -401,7 +401,7 @@ fn test_db_dedup() {
             .v
             .iter()
             .zip(&db2.v)
-            .filter(|(a, b)| a.code == b.code && a.char == b.char && a.score == b.score)
+            .filter(|(a, b)| a.code == b.code && a.char == b.char && a.rating == b.rating)
             .count();
 
         assert!(db1.v.len() == matched);
@@ -419,19 +419,19 @@ fn test_db_dedup_2() {
 
     let x = db.v.iter().find(|x| x.code == "aombc");
     match x {
-        Some(ch) => assert_eq!(ch.score, -9),
+        Some(ch) => assert_eq!(ch.rating, -9),
         None => panic!("unable to find target character"),
     }
 
     let x = db.v.iter().find(|x| x.code == "cvmi");
     match x {
-        Some(ch) => assert_eq!(ch.score, -5),
+        Some(ch) => assert_eq!(ch.rating, -5),
         None => panic!("unable to find target character"),
     }
 
     let x = db.v.iter().find(|x| x.code == "ybog");
     match x {
-        Some(ch) => assert_eq!(ch.score, -2),
+        Some(ch) => assert_eq!(ch.rating, -2),
         None => panic!("unable to find target character"),
     }
 
@@ -463,7 +463,7 @@ fn test_db_create_datafile() {
         .v
         .iter()
         .zip(&db2.v)
-        .filter(|(a, b)| a.code == b.code && a.char == b.char && a.score == b.score)
+        .filter(|(a, b)| a.code == b.code && a.char == b.char && a.rating == b.rating)
         .count();
 
     assert!(db1.v.len() == matched);
@@ -476,7 +476,7 @@ fn test_char_clone() {
     let ch1 = Chinese {
         char: "天".to_string(),
         code: "mk".to_string(),
-        score: 0,
+        rating: 0,
     };
     let ch2 = ch1.clone();
     assert_eq!(ch1, ch2);

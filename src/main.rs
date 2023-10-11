@@ -52,9 +52,9 @@ fn run(items: Vec<Chinese>) -> Vec<Chinese> {
             while !ask("Practice:", &chin.char) {}
         }
 
-        chin.score += score;
-        if chin.score == 0 {
-            chin.score += score;
+        chin.rating += score;
+        if chin.rating == 0 {
+            chin.rating += score;
         }
         results.push(chin);
     }

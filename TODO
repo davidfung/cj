@@ -1,7 +1,7 @@
 = TODO
 
 == STAGE 11
-* select chars with score <= 0 more
+* select chars for better user experience
 * fix duplicate test char bug
 * provide instruction for editing cj data file
 * provide easier to understanding scoring system

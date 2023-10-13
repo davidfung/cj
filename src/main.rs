@@ -22,11 +22,11 @@ fn ask(prompt: &str, chinchar: &String) -> bool {
 // On correct code => set rating = 1 if current rating = -1, else increase rating by 1
 // On incorrect code => set rating = -1
 fn run(items: Vec<Chinese>) -> Vec<Chinese> {
-    let mut mark = 0; // for this challenge
+    let mut score = 0; // for this challenge
     let mut count = 0;
     let qcount = items.len();
     let mut results: Vec<Chinese> = Vec::new();
-    let mut score; // character statistics
+    let mut rating; // character statistics
     let mut prefix;
 
     println!("\n======== C H A L L E N G E   B E G I N S ========");
@@ -42,27 +42,32 @@ fn run(items: Vec<Chinese>) -> Vec<Chinese> {
         prefix = format!("#{}/{} ", count, qcount);
 
         if ask(&prefix, &chin.char) {
-            score = 1;
-            mark = mark + 1;
-            println!("Correct! Score: {}", mark);
+            rating = 1;
+            score = score + 1;
+            println!("Correct! Score: {}", score);
         } else {
-            score = -1;
+            rating = -1;
             println!(
                 "Wrong! {} should be \"{}\"!  Score: {}",
-                chin.char, chin.code, mark
+                chin.char, chin.code, score
             );
             while !ask("Practice:", &chin.char) {}
         }
 
-        chin.rating += score;
-        if chin.rating == 0 {
-            chin.rating += score;
+        if rating == (-1) {
+            chin.rating = rating;
+        } else {
+            if chin.rating == (-1) {
+                chin.rating = 1;
+            } else {
+                chin.rating += 1;
+            }
         }
         results.push(chin);
     }
 
     let elapsed_time = now.elapsed();
-    show_score(mark, qcount, elapsed_time);
+    show_score(score, qcount, elapsed_time);
 
     results
 }

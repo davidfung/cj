@@ -198,16 +198,17 @@ impl CJDatabase {
     }
 
     // Return a subset of the chinese characters set for best user experience.
+    // Out of 10 chars:
     // Select 1 char with rating < 0
     // Select 8 chars with rating = 0
-    // Select rest of chars where rating = 1, then rating = 2, etc.
+    // Select rest of chars with rating = 1, then rating = 2, etc.
     pub fn get_items_smart(&self, item_count: usize) -> Vec<Chinese> {
         let mut items = Vec::new();
-        let quota = item_count / 3; // 33%
-        let mut rest;
         let mut rng = thread_rng();
+        let mut quota;
 
-        // difficult
+        // Select 1 char with rating < 0
+        quota = item_count / 10;
         for q in self
             .v
             .iter()
@@ -220,7 +221,8 @@ impl CJDatabase {
             items.push(q.clone());
         }
 
-        // new
+        // Select 8 chars with rating = 0
+        quota = item_count * 8 / 10;
         for q in self
             .v
             .iter()
@@ -233,38 +235,22 @@ impl CJDatabase {
             items.push(q.clone());
         }
 
-        // easy
-        for q in self
-            .v
-            .iter()
-            .filter(|x| x.rating > 0 && x.rating <= 3)
-            .choose_multiple(&mut rng, quota)
-        {
-            if items.len() >= item_count {
-                break;
-            }
-            items.push(q.clone());
-        }
-
-        // very easy
-        rest = item_count - items.len();
-        if rest > 0 {
+        // Select rest of chars with rating = 1, then rating = 2, etc.
+        let mut rating = 1;
+        while items.len() < item_count {
+            quota = item_count - items.len();
             for q in self
                 .v
                 .iter()
-                .filter(|x| x.rating > 3)
-                .choose_multiple(&mut rng, rest)
+                .filter(|x| x.rating == rating)
+                .choose_multiple(&mut rng, quota)
             {
+                if items.len() >= item_count {
+                    break;
+                }
                 items.push(q.clone());
             }
-        }
-
-        // random
-        rest = item_count - items.len();
-        if rest > 0 {
-            for q in self.v.iter().choose_multiple(&mut rng, rest) {
-                items.push(q.clone());
-            }
+            rating += 1;
         }
 
         items.shuffle(&mut rng);
@@ -349,8 +335,8 @@ fn test_db_get_items_score() {
 #[test]
 fn test_db_get_items_smart() {
     let mut db = CJDatabase { v: Vec::new() };
-    // db.load_from("./tests/cj04.csv");
-    db.load_from("./data/cj.csv");
+    //db.load_from("./tests/cj04.csv");
+    db.load_from("./tests/cj06.csv");
     let items = db.get_items_smart(10);
     for (i, ch) in items.iter().enumerate() {
         println!("#{} {} {} {}", i, ch.char, ch.code, ch.rating);

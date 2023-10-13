@@ -201,8 +201,6 @@ impl CJDatabase {
     // Select 1 char with rating < 0
     // Select 8 chars with rating = 0
     // Select rest of chars where rating = 1, then rating = 2, etc.
-    // On correct code => set rating = 1 if current rating = -1, else increase rating by 1
-    // On incorrect code => set rating = -1
     pub fn get_items_smart(&self, item_count: usize) -> Vec<Chinese> {
         let mut items = Vec::new();
         let quota = item_count / 3; // 33%

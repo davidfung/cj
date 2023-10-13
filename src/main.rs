@@ -19,6 +19,8 @@ fn ask(prompt: &str, chinchar: &String) -> bool {
     chinchar == line.trim()
 }
 
+// On correct code => set rating = 1 if current rating = -1, else increase rating by 1
+// On incorrect code => set rating = -1
 fn run(items: Vec<Chinese>) -> Vec<Chinese> {
     let mut mark = 0; // for this challenge
     let mut count = 0;

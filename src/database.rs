@@ -216,10 +216,10 @@ impl CJDatabase {
             .filter(|x| x.rating < 0)
             .choose_multiple(&mut rng, quota)
         {
+            items.push(q.clone());
             if items.len() >= item_count {
                 break;
             }
-            items.push(q.clone());
         }
 
         // Select 8 chars with rating = 0
@@ -230,10 +230,10 @@ impl CJDatabase {
             .filter(|x| x.rating == 0)
             .choose_multiple(&mut rng, quota)
         {
+            items.push(q.clone());
             if items.len() >= item_count {
                 break;
             }
-            items.push(q.clone());
         }
 
         // Select chars with rating = 1, then rating = 2, ... until 3
@@ -246,16 +246,27 @@ impl CJDatabase {
                 .filter(|x| x.rating == rating)
                 .choose_multiple(&mut rng, quota)
             {
+                items.push(q.clone());
                 if items.len() >= item_count {
                     break;
                 }
-                items.push(q.clone());
             }
             rating += 1;
         }
 
         // Select rest of chars randomly
-        //TODO
+        quota = item_count - items.len();
+        for q in self
+            .v
+            .iter()
+            .filter(|x| !items.contains(x))
+            .choose_multiple(&mut rng, quota)
+        {
+            items.push(q.clone());
+            if items.len() >= item_count {
+                break;
+            }
+        }
 
         items.shuffle(&mut rng);
         items

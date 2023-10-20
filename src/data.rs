@@ -1,3 +1,4 @@
+pub static PRISTINE: &str = "
 a,日,0
 a,曰,0
 aa,昌,0
@@ -13100,3 +13101,4 @@ zxbu,《,0
 zxbv,》,0
 zxcd,「,0
 zxce,」,0
+";

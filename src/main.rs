@@ -5,7 +5,7 @@ use console::Term;
 use database::{CJDatabase, Chinese};
 use owo_colors::OwoColorize;
 
-pub mod data;
+mod data;
 mod database;
 
 const QUESTION_COUNT: usize = 10; // at least 10 questions

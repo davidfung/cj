@@ -3,15 +3,16 @@
 == STAGE 11
 x select chars for better user experience
 x fix duplicate test char bug
-* provide instruction for editing cj data file
-* provide easier to understanding scoring system
-* evalulate TUI
+x provide instruction for editing cj data file
 x build a complete cj database
 x user input allow chinese input method (i.e. continue and quit)
 x reserve zero score for blank new character
-* upgrade default cj database
+x upgrade default cj database
 
 == STAGE 12
+* show version number
+* evalulate TUI
+* provide easier to understanding scoring system
 * create a new branch for score
 * create a new branch for toml
 

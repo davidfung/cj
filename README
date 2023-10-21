@@ -26,8 +26,11 @@ Chinese compatible font such as NSimSun.
 * Example: aombc,題,0
 * A: cangjie code (both upper and lower cases ok)
 * B: chinese character
-* C: integer score, indicates correct count, can be negative
-     zero means never used, -1 will jump to 1, and 1 will drop to -1
+* C: integer rating
+     1. zero means never tested 
+     3. each correct test will increase rating by 1
+     4. each incorrect test will set rating to -1
+     5. if rating is -1, a correct test will set the rating to 1
 * Location: <app_folder>/data/cj.csv
 * The program will automatically create a data file if not exists.
 * Blank lines are allowed

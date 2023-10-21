@@ -444,7 +444,6 @@ fn test_db_dedup_2() {
 }
 
 #[test]
-//zzz
 fn test_db_create_datafile() {
     let datafile0 = "./tests/cj05.csv";
     let parent = "./tests/temp";
